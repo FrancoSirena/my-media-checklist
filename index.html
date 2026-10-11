@@ -1105,6 +1105,7 @@
     <a href="#where" data-mode="buy">Where</a>
     <a href="#negotiate" data-mode="buy">Negotiate</a>
     <a href="#decision" data-mode="buy">Decide</a>
+    <a href="#tablets" data-mode="buy">Tablets</a>
     <a href="#checklist" data-mode="buy">Checklist</a>
     <a href="#emergency" data-mode="buy">Emergency</a>
     <a href="#prereq" data-mode="build">Prereqs</a>
@@ -1481,10 +1482,137 @@ sudo dmidecode -t memory | grep -E "Size|Speed|Type"
     </div>
   </section>
 
+  <!-- TABLETS -->
+  <section id="tablets" data-mode="buy">
+    <div class="section-head">
+      <span class="num">08</span>
+      <h2>Tablet for the HA Voice Kiosk</h2>
+    </div>
+    <p class="lead">Alongside the mini PC: an Android tablet running <strong>Kiosk Satellite</strong> — free, fully local, no subscription — as a wall-mounted Home Assistant dashboard with hands-free voice control (wake word on-device) via the Voice Satellite integration.</p>
+
+    <div class="spec-grid">
+      <div class="spec">
+        <div class="label">Android · <span class="must">MUST</span></div>
+        <div class="value">Android 8+ (Kiosk Satellite needs 7+)</div>
+      </div>
+      <div class="spec">
+        <div class="label">RAM · <span class="must">MUST</span></div>
+        <div class="value mono">4GB min, 6–8GB preferred</div>
+      </div>
+      <div class="spec">
+        <div class="label">Microphone · <span class="must">MUST</span></div>
+        <div class="value">Decent mic — wake word runs on-device</div>
+      </div>
+      <div class="spec">
+        <div class="label">Brand · <span class="must">MUST</span></div>
+        <div class="value">Xiaomi / Lenovo only — no white-label</div>
+      </div>
+      <div class="spec">
+        <div class="label">Google Play · <span class="nice">NICE</span></div>
+        <div class="value">Not required — app installs via APK</div>
+      </div>
+      <div class="spec">
+        <div class="label">Charge limit · <span class="nice">NICE</span></div>
+        <div class="value">80% battery cap (swell protection)</div>
+      </div>
+    </div>
+
+    <p class="lead" style="margin-top:18px">ZOL-baseline anchors — same trick as the mini PC: screenshot the ZOL price the morning you shop and cite it when haggling.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Model / Spec</th>
+            <th>Reference</th>
+            <th>EUR</th>
+            <th>Tag</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="name">Redmi Pad SE 11" · Helio G85, 8GB, 128GB</td>
+            <td>ZOL ¥899</td>
+            <td class="price">€115</td>
+            <td><span class="badge best">BEST VALUE</span></td>
+          </tr>
+          <tr>
+            <td class="name">Lenovo Xiaoxin Pad Pro 12.7" · 8GB, 128GB</td>
+            <td>ZOL ¥1,399</td>
+            <td class="price">€180</td>
+            <td><span class="badge safe">BIG SCREEN</span></td>
+          </tr>
+          <tr>
+            <td class="name">Redmi Pad Pro 12.1" · Snapdragon 7s G2, 6GB, 128GB</td>
+            <td>ZOL ¥1,499</td>
+            <td class="price">€190</td>
+            <td><span class="badge safe">90HZ</span></td>
+          </tr>
+          <tr>
+            <td class="name">Xiaomi Pad 7 11.2" · Snapdragon 7+ G3, 8GB, 256GB</td>
+            <td>ZOL ¥1,999</td>
+            <td class="price">€255</td>
+            <td><span class="badge perf">SMOOTHEST</span></td>
+          </tr>
+          <tr>
+            <td class="name">Used Lenovo Tab M11 · 4GB, 128GB</td>
+            <td>Xianyu ¥600–800</td>
+            <td class="price">€80–105</td>
+            <td><span class="badge safe">CHEAPEST</span></td>
+          </tr>
+          <tr>
+            <td class="name">Huawei MatePad (any model)</td>
+            <td>ZOL ¥1,699+</td>
+            <td class="price bad">€220+</td>
+            <td><span class="badge risk">AVOID — NO GMS</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="redflags">
+      <h3>🚩 Tablet red flags — walk away</h3>
+      <ul>
+        <li>No-name white-label tablets — bad Wi-Fi chipsets and mics kill wake-word reliability</li>
+        <li>Huawei / Honor — no Google framework; sideloading and debugging are painful</li>
+        <li>2GB RAM units — Kiosk Satellite will stutter on camera-feed dashboards</li>
+        <li>"Export version" tablets with mystery ROMs — verify Android version in Settings → About</li>
+        <li>Charger missing from the box — haggle ¥30–50 off if absent</li>
+      </ul>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <h4 style="font-size:1rem;margin-bottom:8px">✅ The pick: Redmi Pad SE 8GB</h4>
+      <p style="font-size:.88rem;color:var(--text-dim)">¥899 ZOL baseline, Helio G85 is plenty for dashboards, available at every second stall, HyperOS lets you disable battery restrictions for the kiosk app. Upgrade to the Xiaomi Pad 7 (¥1,999) only if you want 144Hz smoothness for camera feeds. Either way: automate a 20–80% smart-plug charge cycle in Home Assistant — a tablet parked at 100% on permanent power will swell its battery within 1–2 years.</p>
+    </div>
+
+    <div class="card" style="margin-top:12px">
+      <h4 style="font-size:1rem;margin-bottom:14px">🛠 Install &amp; configure plan</h4>
+      <p style="font-size:.82rem;color:var(--text-faint);margin-bottom:10px"><strong style="color:var(--text)">On the Home Assistant Green</strong> — do this before the trip; it needs no tablet</p>
+      <ul class="nego">
+        <li><strong>Install the Wyoming add-ons:</strong> Settings → Add-ons → Add-on store → Piper (TTS), openWakeWord, and wyoming-onnx-asr (STT). On the Green's modest hardware, onnx-asr/Parakeet is noticeably lighter than faster-whisper.</li>
+        <li><strong>Build a local Assist pipeline:</strong> Settings → Voice assistants → Add assistant → pick local STT + Piper + openWakeWord. Everything stays on the LAN — no Nabu Casa subscription.</li>
+        <li><strong>Install HACS:</strong> Settings → Apps → add repository github.com/hacs/addons → install "Get HACS" → restart Home Assistant.</li>
+        <li><strong>Install Voice Satellite:</strong> HACS → Custom repositories → add jxlarrea/voice-satellite-card-integration → download → restart. (With Kiosk Satellite's built-in voice you can skip this — but installing it costs nothing and covers both setups.)</li>
+      </ul>
+      <p style="font-size:.82rem;color:var(--text-faint);margin:14px 0 10px"><strong style="color:var(--text)">On the tablet</strong> — ~10 minutes, APK only, no Play Store or Google account needed (works fine on Chinese ROMs)</p>
+      <ul class="nego">
+        <li><strong>Create a long-lived access token:</strong> HA → your profile → Security → Long-lived access tokens → copy it somewhere safe.</li>
+        <li><strong>Sideload Kiosk Satellite:</strong> download the APK from the project's GitHub releases page; allow "install from unknown sources" once when prompted.</li>
+        <li><strong>Run the setup wizard:</strong> enter your HA URL (http://homeassistant.local:8123) + the token → pick your dashboard → leave Voice Satellite enabled → choose wake word (e.g. "Okay Nabu") and the local pipeline.</li>
+        <li><strong>Confirm discovery:</strong> the tablet shows up under Settings → Devices &amp; services on the Green → assign it to a room/area.</li>
+        <li><strong>Enable the ESPHome connection</strong> in the app settings → screen, volume, motion, and battery become HA entities you can automate.</li>
+        <li><strong>Kill battery restrictions:</strong> Xiaomi/HyperOS → Settings → Apps → Kiosk Satellite → Battery saver → No restrictions. Otherwise Android will freeze the wake word overnight.</li>
+        <li><strong>Protect the battery:</strong> automation on the smart plug — OFF at 80%, ON at 20% (uses the battery sensor from the step above).</li>
+        <li><strong>Optional — remote admin UI:</strong> browse to http://&lt;tablet-ip&gt;:2324 from your laptop for fine-tuning without touching the wall mount.</li>
+      </ul>
+    </div>
+  </section>
+
   <!-- CHECKLIST -->
   <section id="checklist" data-mode="buy">
     <div class="section-head">
-      <span class="num">08</span>
+      <span class="num">09</span>
       <h2>Pre-Purchase Checklist</h2>
     </div>
     <p class="lead">Tick these off before you leave the hotel. Your progress is saved automatically.</p>
@@ -1547,6 +1675,13 @@ sudo dmidecode -t memory | grep -E "Size|Speed|Type"
             <span class="txt"><strong>This checklist saved offline</strong>Bookmark it, or print it</span>
           </label>
         </li>
+        <li>
+          <label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer">
+            <input type="checkbox" id="c9" data-persist>
+            <span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="txt"><strong>Tablet ZOL screenshots saved</strong>Redmi Pad SE ¥899 — your anchor for the kiosk tablet</span>
+          </label>
+        </li>
       </ul>
       <button class="reset-btn" id="resetBtn">Reset all progress</button>
     </div>
@@ -1555,7 +1690,7 @@ sudo dmidecode -t memory | grep -E "Size|Speed|Type"
   <!-- EMERGENCY -->
   <section id="emergency" data-mode="buy">
     <div class="section-head">
-      <span class="num">09</span>
+      <span class="num">10</span>
       <h2>Emergency Info</h2>
     </div>
     <div class="emergency">
@@ -2333,7 +2468,7 @@ ls -li /mnt/media/tv/&lt;series&gt;/&lt;episode-file&gt;<span class="cmt">
 </main>
 
 <footer>
-  <p class="oneliner">Two chapters, one machine: buy a GMKtec G2 (N100, 12GB, 512GB) for ~€140 in Shenzhen, pair it with a 4TB WD My Passport, then run this playbook to turn it into a Jellyfin media server with Sonarr, Radarr, Overseerr, a ProtonVPN kill-switch, and wireless TV streaming anywhere via Tailscale.</p>
+  <p class="oneliner">Two chapters, one machine: buy a GMKtec G2 (N100, 12GB, 512GB) for ~€140 in Shenzhen, pair it with a 4TB WD My Passport, then run this playbook to turn it into a Jellyfin media server with Sonarr, Radarr, Overseerr, a ProtonVPN kill-switch, and wireless TV streaming anywhere via Tailscale. Grab a Redmi Pad SE (~€115, ZOL ¥899) while you're at it: the subscription-free Home Assistant voice kiosk for the kitchen wall.</p>
   <p>Media Server Playbook · Works offline · State saved locally</p>
 </footer>
 
