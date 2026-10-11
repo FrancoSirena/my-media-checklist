@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0d1117">
-<meta name="description" content="Shenzhen Huaqiangbei mini PC shopping checklist — November 2026. Price anchors, verification commands, and a live budget calculator.">
-<title>Shenzhen PC Hunt · Huaqiangbei Checklist</title>
+<meta name="description" content="Mini PC media server playbook — Shenzhen Huaqiangbei buying checklist plus the full after-arrival build: Ubuntu Server, Docker, ProtonVPN, Jellyfin, and wireless TV streaming.">
+<title>Media Server Playbook · Buy &amp; Build</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230d1117'/%3E%3Ctext x='50' y='68' font-size='52' text-anchor='middle' fill='%2358a6ff' font-family='monospace'%3E%E2%9C%93%3C/text%3E%3C/svg%3E">
 <style>
   :root {
@@ -149,6 +149,186 @@
 
   .tabs a:hover { color: var(--text); background: var(--bg-3); }
   .tabs a.active { color: var(--accent); background: rgba(88,166,255,.12); }
+
+  /* ---------- Mode switch ---------- */
+  .modes {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 10px 20px 0;
+    display: flex;
+    gap: 6px;
+  }
+
+  .modes button {
+    font-family: var(--sans);
+    font-size: .8rem;
+    font-weight: 600;
+    color: var(--text-dim);
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    padding: 6px 14px;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all .15s;
+    white-space: nowrap;
+  }
+
+  .modes button:hover { color: var(--text); border-color: var(--border-2); }
+
+  .modes button.active {
+    color: #fff;
+    background: var(--accent-dim);
+    border-color: var(--accent-dim);
+  }
+
+  .mode-hidden { display: none !important; }
+
+  /* ---------- File block (compose / env / fstab) ---------- */
+  .file-block {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+
+  .file-block .fb-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 8px 14px;
+    background: var(--bg-3);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .file-block .fb-name {
+    font-family: var(--mono);
+    font-size: .78rem;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .file-block .fb-name svg { width: 14px; height: 14px; color: var(--accent); flex-shrink: 0; }
+
+  .file-block pre {
+    padding: 14px;
+    font-family: var(--mono);
+    font-size: .78rem;
+    line-height: 1.65;
+    color: #c9d1d9;
+    overflow-x: auto;
+    white-space: pre;
+    max-height: 460px;
+    overflow-y: auto;
+  }
+
+  .file-block pre .cmt { color: var(--text-faint); }
+
+  /* ---------- Notes / callouts ---------- */
+  .note {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    background: rgba(88,166,255,.07);
+    border: 1px solid rgba(88,166,255,.25);
+    border-left-width: 3px;
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    font-size: .85rem;
+    color: var(--text-dim);
+    margin: 12px 0;
+  }
+
+  .note .ico { flex-shrink: 0; font-size: .95rem; line-height: 1.5; }
+  .note strong { color: var(--text); }
+  .note code { font-family: var(--mono); font-size: .8rem; color: var(--text); }
+
+  .note.warn {
+    background: rgba(210,153,34,.08);
+    border-color: rgba(210,153,34,.35);
+  }
+
+  .note.danger {
+    background: rgba(248,81,73,.08);
+    border-color: rgba(248,81,73,.35);
+  }
+
+  .note.ok {
+    background: rgba(63,185,80,.08);
+    border-color: rgba(63,185,80,.35);
+  }
+
+  /* ---------- Phase steps ---------- */
+  .steps { list-style: none; counter-reset: step; }
+  .steps > li {
+    position: relative;
+    padding-left: 36px;
+    padding-bottom: 18px;
+    border-left: 2px solid var(--border);
+    margin-left: 12px;
+  }
+  .steps > li:last-child { border-left-color: transparent; padding-bottom: 0; }
+  .steps > li::before {
+    counter-increment: step;
+    content: counter(step);
+    position: absolute;
+    left: -13px;
+    top: 0;
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: var(--bg-3);
+    border: 2px solid var(--border-2);
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: .7rem;
+    font-weight: 700;
+    display: grid;
+    place-items: center;
+  }
+  .steps > li > strong {
+    display: block;
+    color: var(--text);
+    font-size: .95rem;
+    margin-bottom: 8px;
+    padding-top: 1px;
+  }
+  .steps p { color: var(--text-dim); font-size: .88rem; margin-bottom: 10px; }
+
+  /* ---------- Time / maintenance tables ---------- */
+  table.time td:last-child, table.time th:last-child { text-align: right; font-family: var(--mono); font-size: .82rem; }
+  table.time tr.total td { font-weight: 700; color: var(--text); border-top: 2px solid var(--border-2); }
+
+  /* ---------- TV platform list ---------- */
+  .tv-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 10px;
+  }
+  .tv-grid .tv {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+  }
+  .tv-grid .tv .plat { font-weight: 600; font-size: .88rem; color: var(--text); }
+  .tv-grid .tv .store { font-size: .78rem; color: var(--text-dim); margin-top: 2px; }
+
+  /* ---------- Phase chip (section head) ---------- */
+  .section-head .phase {
+    font-family: var(--mono);
+    font-size: .7rem;
+    color: var(--warn);
+    background: rgba(210,153,34,.12);
+    border: 1px solid rgba(210,153,34,.3);
+    padding: 3px 8px;
+    border-radius: 6px;
+    flex-shrink: 0;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+  }
 
   /* ---------- Layout ---------- */
   main {
@@ -901,8 +1081,8 @@
 <header class="app-header">
   <div class="header-inner">
     <div class="brand">
-      <h1><span class="dot"></span>Shenzhen PC Hunt</h1>
-      <p>Huaqiangbei · November 2026</p>
+      <h1><span class="dot"></span>Media Server Playbook</h1>
+      <p>Buy in Shenzhen · Build at home · Watch anywhere</p>
     </div>
     <div class="progress-wrap">
       <svg class="ring" width="44" height="44" viewBox="0 0 44 44">
@@ -913,23 +1093,40 @@
       <span id="progressText">0/0</span>
     </div>
   </div>
+  <div class="modes" id="modes">
+    <button data-mode="buy" class="active">🛒 Shenzhen Hunt</button>
+    <button data-mode="build">🖥️ Build &amp; Deploy</button>
+  </div>
   <nav class="tabs" id="tabs">
-    <a href="#target">Target</a>
-    <a href="#prices">Prices</a>
-    <a href="#calc">Calculator</a>
-    <a href="#verify">Verify</a>
-    <a href="#where">Where</a>
-    <a href="#negotiate">Negotiate</a>
-    <a href="#decision">Decide</a>
-    <a href="#checklist">Checklist</a>
-    <a href="#emergency">Emergency</a>
+    <a href="#target" data-mode="buy">Target</a>
+    <a href="#prices" data-mode="buy">Prices</a>
+    <a href="#calc" data-mode="buy">Calculator</a>
+    <a href="#verify" data-mode="buy">Verify</a>
+    <a href="#where" data-mode="buy">Where</a>
+    <a href="#negotiate" data-mode="buy">Negotiate</a>
+    <a href="#decision" data-mode="buy">Decide</a>
+    <a href="#checklist" data-mode="buy">Checklist</a>
+    <a href="#emergency" data-mode="buy">Emergency</a>
+    <a href="#prereq" data-mode="build">Prereqs</a>
+    <a href="#install" data-mode="build">OS</a>
+    <a href="#drive" data-mode="build">Drive</a>
+    <a href="#docker" data-mode="build">Docker</a>
+    <a href="#keys" data-mode="build">Keys</a>
+    <a href="#stack" data-mode="build">Stack</a>
+    <a href="#configure" data-mode="build">Configure</a>
+    <a href="#verify2" data-mode="build">Verify</a>
+    <a href="#tv" data-mode="build">TV</a>
+    <a href="#remote" data-mode="build">Remote</a>
+    <a href="#daily" data-mode="build">Daily</a>
+    <a href="#trouble" data-mode="build">Fix</a>
+    <a href="#done" data-mode="build">Done</a>
   </nav>
 </header>
 
 <main>
 
   <!-- TARGET -->
-  <section id="target">
+  <section id="target" data-mode="buy">
     <div class="section-head">
       <span class="num">01</span>
       <h2>What I'm Buying</h2>
@@ -973,7 +1170,7 @@
   </section>
 
   <!-- PRICES -->
-  <section id="prices">
+  <section id="prices" data-mode="buy">
     <div class="section-head">
       <span class="num">02</span>
       <h2>Price Anchors</h2>
@@ -1051,7 +1248,7 @@
   </section>
 
   <!-- CALCULATOR -->
-  <section id="calc">
+  <section id="calc" data-mode="buy">
     <div class="section-head">
       <span class="num">03</span>
       <h2>Budget Calculator</h2>
@@ -1103,7 +1300,7 @@
   </section>
 
   <!-- VERIFY -->
-  <section id="verify">
+  <section id="verify" data-mode="buy">
     <div class="section-head">
       <span class="num">04</span>
       <h2>Verification Commands</h2>
@@ -1215,7 +1412,7 @@ sudo dmidecode -t memory | grep -E "Size|Speed|Type"
   </section>
 
   <!-- WHERE -->
-  <section id="where">
+  <section id="where" data-mode="buy">
     <div class="section-head">
       <span class="num">05</span>
       <h2>Where to Go</h2>
@@ -1247,7 +1444,7 @@ sudo dmidecode -t memory | grep -E "Size|Speed|Type"
   </section>
 
   <!-- NEGOTIATE -->
-  <section id="negotiate">
+  <section id="negotiate" data-mode="buy">
     <div class="section-head">
       <span class="num">06</span>
       <h2>Negotiation Cheat Sheet</h2>
@@ -1264,7 +1461,7 @@ sudo dmidecode -t memory | grep -E "Size|Speed|Type"
   </section>
 
   <!-- DECISION -->
-  <section id="decision">
+  <section id="decision" data-mode="buy">
     <div class="section-head">
       <span class="num">07</span>
       <h2>Decision Tree</h2>
@@ -1285,7 +1482,7 @@ sudo dmidecode -t memory | grep -E "Size|Speed|Type"
   </section>
 
   <!-- CHECKLIST -->
-  <section id="checklist">
+  <section id="checklist" data-mode="buy">
     <div class="section-head">
       <span class="num">08</span>
       <h2>Pre-Purchase Checklist</h2>
@@ -1356,7 +1553,7 @@ sudo dmidecode -t memory | grep -E "Size|Speed|Type"
   </section>
 
   <!-- EMERGENCY -->
-  <section id="emergency">
+  <section id="emergency" data-mode="buy">
     <div class="section-head">
       <span class="num">09</span>
       <h2>Emergency Info</h2>
@@ -1372,11 +1569,772 @@ sudo dmidecode -t memory | grep -E "Size|Speed|Type"
     </div>
   </section>
 
+  <!-- ============================================================ -->
+  <!-- BUILD & DEPLOY — starts after the hardware has been bought   -->
+  <!-- ============================================================ -->
+
+  <!-- PREREQS -->
+  <section id="prereq" data-mode="build">
+    <div class="section-head">
+      <span class="num">B0</span>
+      <h2>Prerequisites</h2>
+    </div>
+    <p class="lead">This chapter picks up <strong>after</strong> you've bought the mini PC and the 4TB USB HDD. It takes you from first boot to a working media server with a Netflix-style catalog, on-demand downloads, and wireless TV streaming.</p>
+
+    <div class="card">
+      <ul class="checklist">
+        <li>
+          <label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer">
+            <input type="checkbox" id="p1" data-persist>
+            <span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="txt"><strong>Mini PC in hand</strong>GMKtec G2 / Beelink EQ13 / Ryzen 7 mini PC — whatever you bought</span>
+          </label>
+        </li>
+        <li>
+          <label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer">
+            <input type="checkbox" id="p2" data-persist>
+            <span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="txt"><strong>4TB USB HDD</strong>WD My Passport or equivalent</span>
+          </label>
+        </li>
+        <li>
+          <label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer">
+            <input type="checkbox" id="p3" data-persist>
+            <span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="txt"><strong>Ethernet cable</strong>Strongly recommended — Wi-Fi 6 works but wired is more stable</span>
+          </label>
+        </li>
+        <li>
+          <label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer">
+            <input type="checkbox" id="p4" data-persist>
+            <span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="txt"><strong>USB stick (8GB+) for the installer</strong>Plus another computer to write it</span>
+          </label>
+        </li>
+        <li>
+          <label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer">
+            <input type="checkbox" id="p5" data-persist>
+            <span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="txt"><strong>ProtonVPN account (paid plan)</strong>Needed for P2P port forwarding + WireGuard</span>
+          </label>
+        </li>
+        <li>
+          <label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer">
+            <input type="checkbox" id="p6" data-persist>
+            <span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="txt"><strong>Tailscale account</strong>Free tier is fine</span>
+          </label>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- PHASE 1 -->
+  <section id="install" data-mode="build">
+    <div class="section-head">
+      <span class="phase">Phase 1</span>
+      <h2>OS Installation</h2>
+    </div>
+    <p class="lead">Get Ubuntu Server 24.04 LTS onto the NVMe SSD and reachable over SSH.</p>
+
+    <div class="card">
+      <h3 style="font-size:1rem;margin-bottom:10px">1.1 · Create the USB installer</h3>
+      <ol class="steps">
+        <li>
+          <strong>Download Ubuntu Server 24.04 LTS (64-bit)</strong>
+          <p>From <a href="https://ubuntu.com/download/server" style="color:var(--accent)">ubuntu.com/download/server</a>.</p>
+        </li>
+        <li>
+          <strong>Write the ISO to your USB stick</strong>
+          <p>Use <strong>Rufus</strong> (Windows), <strong>balenaEtcher</strong> (Mac/Linux), or <code style="font-family:var(--mono)">dd</code>:</p>
+          <div class="cmd">
+            <div class="cmd-title"><span class="n">dd</span> Write ISO to USB
+              <button class="copy-btn" data-copy="sudo dd if=ubuntu-24.04-live-server-amd64.iso of=/dev/sdX bs=4M status=progress oflag=sync">Copy</button>
+            </div>
+            <pre>sudo dd if=ubuntu-24.04-live-server-amd64.iso of=/dev/sdX bs=4M status=progress oflag=sync<span class="cmt">
+# Replace /dev/sdX with your USB device — check with lsblk FIRST</span></pre>
+          </div>
+          <div class="note danger"><span class="ico">⚠️</span><div><strong>Wrong device = data loss.</strong> Run <code>lsblk</code> before the <code>dd</code> command and confirm your USB stick's device name.</div></div>
+        </li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h3 style="font-size:1rem;margin-bottom:10px">1.2 · BIOS configuration <span style="color:var(--danger);font-size:.8rem">(critical)</span></h3>
+      <ol class="steps">
+        <li><strong>Enter BIOS</strong><p>Press <code style="font-family:var(--mono)">DEL</code>, <code style="font-family:var(--mono)">F2</code>, <code style="font-family:var(--mono)">F7</code> or <code style="font-family:var(--mono)">ESC</code> during boot (varies by vendor; GMKtec/Beelink usually use DEL or F7).</p></li>
+        <li><strong>Disable Secure Boot</strong><p>Security tab → Secure Boot → <strong>Disabled</strong> (or Custom). Ubuntu Server 24.04 sometimes fails to boot with it enabled on N100 boards.</p></li>
+        <li><strong>Enable UEFI boot mode</strong><p>Ensure boot mode is UEFI, not Legacy/CSM.</p></li>
+        <li><strong>Set USB as first boot device</strong><p>Then save and exit (usually <code style="font-family:var(--mono)">F4</code> or <code style="font-family:var(--mono)">F10</code>).</p></li>
+        <li><strong>Enable Intel VT-x</strong><p>If present — for Docker virtualization support.</p></li>
+      </ol>
+      <div class="note warn"><span class="ico">🔒</span><div>Some mini PCs have <strong>locked BIOSes</strong>. If you cannot disable Secure Boot, try the latest Ubuntu Server ISO — newer ISOs often ship signed kernels that work with Secure Boot enabled.</div></div>
+    </div>
+
+    <div class="card">
+      <h3 style="font-size:1rem;margin-bottom:10px">1.3 · Run the installer</h3>
+      <ol class="steps">
+        <li><strong>Boot from USB</strong><p>Select <strong>"Try or Install Ubuntu Server"</strong>.</p></li>
+        <li><strong>Language &amp; keyboard</strong><p>English, your layout.</p></li>
+        <li><strong>Network</strong><p>Ethernet auto-configures. On Wi-Fi, pick your network and enter credentials.</p></li>
+        <li><strong>Storage</strong><p>Use the <strong>entire NVMe SSD</strong> — <em>not</em> the USB HDD (that comes later). Choose "Use an entire disk".</p></li>
+        <li><strong>Create your user</strong><p>e.g. <code style="font-family:var(--mono)">media</code>. This gets <strong>UID 1000</strong> — the same UID we use for all Docker containers.</p></li>
+        <li><strong>OpenSSH</strong><p>✅ <strong>Enable</strong> — you'll use SSH for the rest of the setup.</p></li>
+        <li><strong>Snaps</strong><p>Skip / install none — we don't need them.</p></li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h3 style="font-size:1rem;margin-bottom:10px">1.4 · First login &amp; update</h3>
+      <div class="cmd">
+        <div class="cmd-title"><span class="n">01</span> Update the system
+          <button class="copy-btn" data-copy="sudo apt update && sudo apt upgrade -y && sudo apt install -y curl wget nano htop">Copy</button>
+        </div>
+        <pre>sudo apt update && sudo apt upgrade -y
+sudo apt install -y curl wget nano htop</pre>
+      </div>
+      <div class="note"><span class="ico">📶</span><div><strong>Wi-Fi note:</strong> if you need to reconfigure Wi-Fi later, edit <code>/etc/netplan/50-cloud-init.yaml</code> and run <code>sudo netplan apply</code>. The <code>iwlwifi</code> driver is built into the kernel and detects Intel Wi-Fi 6 adapters automatically.</div></div>
+    </div>
+  </section>
+
+  <!-- PHASE 2 -->
+  <section id="drive" data-mode="build">
+    <div class="section-head">
+      <span class="phase">Phase 2</span>
+      <h2>Media Drive Preparation</h2>
+    </div>
+    <p class="lead">Format the 4TB USB HDD as ext4 and mount it at <code style="font-family:var(--mono)">/mnt/media</code>. Single filesystem = hardlinks work.</p>
+
+    <div class="card">
+      <h3 style="font-size:1rem;margin-bottom:10px">2.1 · Identify &amp; format</h3>
+      <div class="cmd">
+        <div class="cmd-title"><span class="n">02</span> List block devices
+          <button class="copy-btn" data-copy="lsblk">Copy</button>
+        </div>
+        <pre>lsblk<span class="cmt">
+# Look for ~3.6T — e.g. /dev/sda. Do NOT touch /dev/nvme0n1 (your SSD).</span></pre>
+      </div>
+      <div class="cmd">
+        <div class="cmd-title"><span class="n">03</span> Format as ext4
+          <button class="copy-btn" data-copy="sudo mkfs.ext4 /dev/sdX1">Copy</button>
+        </div>
+        <pre>sudo mkfs.ext4 /dev/sdX1<span class="cmt">
+# Replace /dev/sdX1 with the actual partition (e.g. /dev/sda1).
+# Ignore any preloaded software on the drive — you're wiping it.</span></pre>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 style="font-size:1rem;margin-bottom:10px">2.2 · Mount permanently</h3>
+      <div class="cmd">
+        <div class="cmd-title"><span class="n">04</span> Get the UUID
+          <button class="copy-btn" data-copy="sudo blkid /dev/sdX1">Copy</button>
+        </div>
+        <pre>sudo blkid /dev/sdX1</pre>
+      </div>
+      <div class="file-block">
+        <div class="fb-head">
+          <span class="fb-name"><svg viewBox="0 0 16 16" fill="none"><path d="M3 2h7l3 3v9H3z" stroke="currentColor" stroke-width="1.3"/><path d="M10 2v3h3" stroke="currentColor" stroke-width="1.3"/></svg>/etc/fstab</span>
+          <button class="copy-btn" data-copy="UUID=xxxx /mnt/media ext4 defaults,noatime 0 2">Copy</button>
+        </div>
+        <pre><span class="cmt"># add this line, replacing UUID=xxxx with your actual UUID</span>
+UUID=xxxx /mnt/media ext4 defaults,noatime 0 2</pre>
+      </div>
+      <div class="cmd">
+        <div class="cmd-title"><span class="n">05</span> Create mount point &amp; mount
+          <button class="copy-btn" data-copy="sudo mkdir -p /mnt/media && sudo mount -a">Copy</button>
+        </div>
+        <pre>sudo mkdir -p /mnt/media
+sudo mount -a<span class="cmt">
+# Verify it mounted:</span>
+df -h /mnt/media</pre>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 style="font-size:1rem;margin-bottom:10px">2.3 · Create the directory layout</h3>
+      <div class="cmd">
+        <div class="cmd-title"><span class="n">06</span> Create media folders
+          <button class="copy-btn" data-copy="sudo mkdir -p /mnt/media/{movies,tv,incomplete,complete,torrents} && sudo chown -R 1000:1000 /mnt/media">Copy</button>
+        </div>
+        <pre>sudo mkdir -p /mnt/media/{movies,tv,incomplete,complete,torrents}
+sudo chown -R 1000:1000 /mnt/media</pre>
+      </div>
+      <div class="note ok"><span class="ico">🔗</span><div><strong>Why this layout?</strong> qBittorrent downloads to <code>/data/incomplete</code>, moves finished files to <code>/data/complete</code>, and Sonarr/Radarr create <strong>hardlinks</strong> into <code>/data/movies</code> and <code>/data/tv</code>. Hardlinks only work when both paths are on the same filesystem — that's why the single <code>/mnt/media</code> mount matters.</div></div>
+    </div>
+  </section>
+
+  <!-- PHASE 3 -->
+  <section id="docker" data-mode="build">
+    <div class="section-head">
+      <span class="phase">Phase 3</span>
+      <h2>Docker Installation</h2>
+    </div>
+    <p class="lead">Install Docker Engine and grant your user access to the Docker socket.</p>
+
+    <div class="cmd">
+      <div class="cmd-title"><span class="n">07</span> Install Docker Engine
+        <button class="copy-btn" data-copy="curl -fsSL https://get.docker.com | sh
+sudo usermod -aG docker $USER">Copy</button>
+      </div>
+      <pre>curl -fsSL https://get.docker.com | sh
+sudo usermod -aG docker $USER<span class="cmt">
+# Log out and back in (or run: newgrp docker) for the group change to apply.</span></pre>
+    </div>
+
+    <div class="cmd">
+      <div class="cmd-title"><span class="n">08</span> Verify Docker &amp; Compose
+        <button class="copy-btn" data-copy="docker run hello-world && docker compose version">Copy</button>
+      </div>
+      <pre>docker run hello-world
+<span class="exp"># Hello from Docker!</span>
+
+docker compose version<span class="cmt">
+# Compose v2 ships with Docker Engine — no separate install needed.</span></pre>
+    </div>
+  </section>
+
+  <!-- PHASE 4 -->
+  <section id="keys" data-mode="build">
+    <div class="section-head">
+      <span class="phase">Phase 4</span>
+      <h2>ProtonVPN + Tailscale Keys</h2>
+    </div>
+    <p class="lead">You need two secrets before deploying the stack. Neither is committed to Git.</p>
+
+    <div class="card">
+      <h3 style="font-size:1rem;margin-bottom:10px">4.1 · ProtonVPN WireGuard private key</h3>
+      <ol class="steps">
+        <li><strong>Log in to protonvpn.com</strong><p>Account → Account Settings → <strong>WireGuard configuration</strong>.</p></li>
+        <li><strong>Download a config</strong><p>Pick <em>Netherlands</em> (or any country you prefer).</p></li>
+        <li><strong>Copy the <code style="font-family:var(--mono)">PrivateKey =</code> value</strong><p>You'll paste it into <code style="font-family:var(--mono)">.env</code> in Phase 5.</p></li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h3 style="font-size:1rem;margin-bottom:10px">4.2 · Tailscale auth key</h3>
+      <ol class="steps">
+        <li><strong>Open the keys page</strong><p><a href="https://login.tailscale.com/admin/settings/keys" style="color:var(--accent)">login.tailscale.com/admin/settings/keys</a> → <strong>Generate auth key</strong>.</p></li>
+        <li><strong>Configure the key</strong><p>Description <code style="font-family:var(--mono)">mediabox</code> · Reusable ✅ <strong>Yes</strong> · Ephemeral ❌ <strong>No</strong> · Expiry: long (e.g. 90 days) or never.</p></li>
+        <li><strong>Copy the key</strong><p>It starts with <code style="font-family:var(--mono)">tskey-auth-...</code> — paste it into <code style="font-family:var(--mono)">.env</code>.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- PHASE 5 -->
+  <section id="stack" data-mode="build">
+    <div class="section-head">
+      <span class="phase">Phase 5</span>
+      <h2>Deploy the Docker Stack</h2>
+    </div>
+    <p class="lead">Eight containers: Gluetun, qBittorrent, Jellyfin, Sonarr, Radarr, Prowlarr, Overseerr, and Tailscale.</p>
+
+    <div class="cmd">
+      <div class="cmd-title"><span class="n">09</span> Create project directory
+        <button class="copy-btn" data-copy="mkdir -p ~/mediabox && cd ~/mediabox">Copy</button>
+      </div>
+      <pre>mkdir -p ~/mediabox && cd ~/mediabox</pre>
+    </div>
+
+    <div class="file-block">
+      <div class="fb-head">
+        <span class="fb-name"><svg viewBox="0 0 16 16" fill="none"><path d="M3 2h7l3 3v9H3z" stroke="currentColor" stroke-width="1.3"/><path d="M10 2v3h3" stroke="currentColor" stroke-width="1.3"/></svg>~/mediabox/docker-compose.yml</span>
+        <button class="copy-btn" data-copy-file="compose">Copy</button>
+      </div>
+      <pre id="composeYaml">name: mediabox
+
+services:
+  gluetun:
+    image: qmcgaw/gluetun
+    container_name: gluetun
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    ports:
+      - "8081:8080"        <span class="cmt"># qBittorrent WebUI</span>
+    environment:
+      VPN_SERVICE_PROVIDER: protonvpn
+      VPN_TYPE: wireguard
+      WIREGUARD_PRIVATE_KEY: ${WIREGUARD_PRIVATE_KEY}
+      WIREGUARD_ADDRESSES: 10.2.0.2/32
+      SERVER_REGIONS: Netherlands
+      VPN_PORT_FORWARDING: "on"
+      VPN_PORT_FORWARDING_PROVIDER: protonvpn
+    volumes:
+      - ./gluetun:/gluetun
+    restart: unless-stopped
+
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    network_mode: service:gluetun
+    depends_on:
+      gluetun:
+        condition: service_healthy
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: Europe/Amsterdam
+      WEBUI_PORT: 8080
+    volumes:
+      - ./qbittorrent:/config
+      - /mnt/media:/data
+    restart: unless-stopped
+
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    container_name: jellyfin
+    ports:
+      - "8096:8096"
+    devices:
+      - /dev/dri:/dev/dri
+    group_add:
+      - "989"
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: Europe/Amsterdam
+      JELLYFIN_PublishedServerUrl: http://mediabox
+    volumes:
+      - ./jellyfin:/config
+      - /mnt/media:/data
+    restart: unless-stopped
+
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    ports:
+      - "8989:8989"
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: Europe/Amsterdam
+    volumes:
+      - ./sonarr:/config
+      - /mnt/media:/data
+    restart: unless-stopped
+
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    ports:
+      - "7878:7878"
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: Europe/Amsterdam
+    volumes:
+      - ./radarr:/config
+      - /mnt/media:/data
+    restart: unless-stopped
+
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    ports:
+      - "9696:9696"
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: Europe/Amsterdam
+    volumes:
+      - ./prowlarr:/config
+    restart: unless-stopped
+
+  overseerr:
+    image: lscr.io/linuxserver/overseerr:latest
+    container_name: overseerr
+    ports:
+      - "5055:5055"
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: Europe/Amsterdam
+    volumes:
+      - ./overseerr:/config
+    restart: unless-stopped
+
+  tailscale:
+    image: tailscale/tailscale:latest
+    container_name: tailscale
+    hostname: mediabox
+    environment:
+      TS_AUTHKEY: ${TS_AUTHKEY}
+      TS_STATE_DIR: /var/lib/tailscale
+    volumes:
+      - ./tailscale:/var/lib/tailscale
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    restart: unless-stopped</pre>
+    </div>
+
+    <div class="file-block">
+      <div class="fb-head">
+        <span class="fb-name"><svg viewBox="0 0 16 16" fill="none"><path d="M3 2h7l3 3v9H3z" stroke="currentColor" stroke-width="1.3"/><path d="M10 2v3h3" stroke="currentColor" stroke-width="1.3"/></svg>~/mediabox/.env</span>
+        <button class="copy-btn" data-copy="WIREGUARD_PRIVATE_KEY=paste_your_key_here
+TS_AUTHKEY=paste_your_key_here">Copy</button>
+      </div>
+      <pre>WIREGUARD_PRIVATE_KEY=paste_your_key_here
+TS_AUTHKEY=paste_your_key_here</pre>
+    </div>
+    <div class="note danger"><span class="ico">🔐</span><div><strong>Never commit <code>.env</code> to Git.</strong> Add <code>.env</code> to <code>.gitignore</code>.</div></div>
+
+    <div class="cmd">
+      <div class="cmd-title"><span class="n">10</span> Launch the stack
+        <button class="copy-btn" data-copy="docker compose up -d">Copy</button>
+      </div>
+      <pre>docker compose up -d<span class="cmt">
+# wait 30–60s for containers to start</span>
+docker compose ps<span class="cmt">
+# all services should show Up / running</span></pre>
+    </div>
+
+    <div class="cmd">
+      <div class="cmd-title"><span class="n">11</span> Check Gluetun health
+        <button class="copy-btn" data-copy="docker logs gluetun --tail 50">Copy</button>
+      </div>
+      <pre>docker logs gluetun --tail 50<span class="cmt">
+# look for: "VPN is up"
+# look for: "Port forwarded is 12345"  ← you need this number</span></pre>
+    </div>
+  </section>
+
+  <!-- PHASE 6 -->
+  <section id="configure" data-mode="build">
+    <div class="section-head">
+      <span class="phase">Phase 6</span>
+      <h2>First-Run Configuration</h2>
+    </div>
+    <p class="lead">Open each web UI in turn and wire them together. Follow the tabs in order.</p>
+
+    <div class="card">
+      <h3 style="font-size:1rem;margin-bottom:10px">6.1 · qBittorrent — <span style="font-family:var(--mono);color:var(--accent);font-size:.85rem">:8081</span></h3>
+      <div class="cmd">
+        <div class="cmd-title"><span class="n">12</span> Get the temporary password
+          <button class="copy-btn" data-copy="docker logs qbittorrent | grep &quot;temporary password&quot;">Copy</button>
+        </div>
+        <pre>docker logs qbittorrent | grep "temporary password"</pre>
+      </div>
+      <ul class="checklist">
+        <li><label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer"><input type="checkbox" id="q1" data-persist><span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt"><strong>Change the WebUI password</strong>Tools → Options → Web UI</span></label></li>
+        <li><label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer"><input type="checkbox" id="q2" data-persist><span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt"><strong>Set the listening port</strong>Match the port Gluetun forwarded (dynamic — changes on reconnect)</span></label></li>
+        <li><label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer"><input type="checkbox" id="q3" data-persist><span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt"><strong>Set download paths</strong>Incomplete: <code style="font-family:var(--mono)">/data/incomplete</code> · Completed: <code style="font-family:var(--mono)">/data/complete</code></span></label></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3 style="font-size:1rem;margin-bottom:10px">6.2 · Sonarr — <span style="font-family:var(--mono);color:var(--accent);font-size:.85rem">:8989</span></h3>
+      <ul class="checklist">
+        <li><label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer"><input type="checkbox" id="s1" data-persist><span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt"><strong>Media Management → root folder</strong><code style="font-family:var(--mono)">/data/tv</code></span></label></li>
+        <li><label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer"><input type="checkbox" id="s2" data-persist><span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt"><strong>Enable "Use Hardlinks instead of Copy"</strong>Instant moves, no double disk usage</span></label></li>
+        <li><label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer"><input type="checkbox" id="s3" data-persist><span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt"><strong>Add qBittorrent download client</strong>Host <code style="font-family:var(--mono)">gluetun</code>, port <code style="font-family:var(--mono)">8080</code>, category <code style="font-family:var(--mono)">tv</code></span></label></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3 style="font-size:1rem;margin-bottom:10px">6.3 · Radarr — <span style="font-family:var(--mono);color:var(--accent);font-size:.85rem">:7878</span></h3>
+      <ul class="checklist">
+        <li><label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer"><input type="checkbox" id="r1" data-persist><span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt"><strong>Movies root folder</strong><code style="font-family:var(--mono)">/data/movies</code></span></label></li>
+        <li><label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer"><input type="checkbox" id="r2" data-persist><span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt"><strong>Enable Hardlinks</strong>Same as Sonarr</span></label></li>
+        <li><label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer"><input type="checkbox" id="r3" data-persist><span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt"><strong>Add qBittorrent download client</strong>Same as above, category <code style="font-family:var(--mono)">movies</code></span></label></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3 style="font-size:1rem;margin-bottom:10px">6.4 · Prowlarr — <span style="font-family:var(--mono);color:var(--accent);font-size:.85rem">:9696</span></h3>
+      <ul class="checklist">
+        <li><label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer"><input type="checkbox" id="pr1" data-persist><span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt"><strong>Add indexers</strong>Your torrent (or Usenet) indexers</span></label></li>
+        <li><label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer"><input type="checkbox" id="pr2" data-persist><span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt"><strong>Settings → Apps → add Sonarr &amp; Radarr</strong><code style="font-family:var(--mono)">http://sonarr:8989</code>, <code style="font-family:var(--mono)">http://radarr:7878</code> + API keys</span></label></li>
+        <li><label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer"><input type="checkbox" id="pr3" data-persist><span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt"><strong>Sync indexers</strong>They push automatically to Sonarr/Radarr</span></label></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3 style="font-size:1rem;margin-bottom:10px">6.5 · Jellyfin — <span style="font-family:var(--mono);color:var(--accent);font-size:.85rem">:8096</span></h3>
+      <ul class="checklist">
+        <li><label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer"><input type="checkbox" id="j1" data-persist><span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt"><strong>Complete setup wizard</strong>Metadata language + create admin account</span></label></li>
+        <li><label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer"><input type="checkbox" id="j2" data-persist><span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt"><strong>Add libraries</strong>Movies → <code style="font-family:var(--mono)">/data/movies</code> · TV → <code style="font-family:var(--mono)">/data/tv</code></span></label></li>
+        <li><label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer"><input type="checkbox" id="j3" data-persist><span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt"><strong>Enable Intel QuickSync hardware transcoding</strong>Dashboard → Playback → Transcoding → QSV</span></label></li>
+      </ul>
+      <div class="cmd">
+        <div class="cmd-title"><span class="n">13</span> Verify Intel GPU + render group
+          <button class="copy-btn" data-copy="ls -la /dev/dri
+getent group render">Copy</button>
+        </div>
+        <pre>ls -la /dev/dri<span class="cmt">
+# should show renderD128 and card0</span>
+getent group render<span class="cmt">
+# render:x:989:  ← if not 989, update compose group_add and restart Jellyfin</span></pre>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 style="font-size:1rem;margin-bottom:10px">6.6 · Overseerr — <span style="font-family:var(--mono);color:var(--accent);font-size:.85rem">:5055</span></h3>
+      <ul class="checklist">
+        <li><label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer"><input type="checkbox" id="o1" data-persist><span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt"><strong>Sign in with your Jellyfin account</strong></span></label></li>
+        <li><label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer"><input type="checkbox" id="o2" data-persist><span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt"><strong>Settings → Services → link Sonarr &amp; Radarr</strong>Add both with their API keys</span></label></li>
+        <li><label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer"><input type="checkbox" id="o3" data-persist><span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt"><strong>Test a request</strong>Search a title → Request → it should reach Radarr/Sonarr and download</span></label></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- PHASE 7 -->
+  <section id="verify2" data-mode="build">
+    <div class="section-head">
+      <span class="phase">Phase 7</span>
+      <h2>Verification</h2>
+    </div>
+    <p class="lead">Three tests that prove the whole stack actually works.</p>
+
+    <div class="card">
+      <h3 style="font-size:1rem;margin-bottom:10px">7.1 · Kill-switch test</h3>
+      <p style="color:var(--text-dim);font-size:.88rem;margin-bottom:10px">Both commands must return a <strong>ProtonVPN exit IP</strong> — not your home IP.</p>
+      <div class="cmd">
+        <div class="cmd-title"><span class="n">14</span> Check exit IP
+          <button class="copy-btn" data-copy="docker exec gluetun wget -qO- ifconfig.me
+docker exec qbittorrent wget -qO- ifconfig.me">Copy</button>
+        </div>
+        <pre>docker exec gluetun wget -qO- ifconfig.me
+docker exec qbittorrent wget -qO- ifconfig.me<span class="cmt">
+# Both must show the ProtonVPN IP.</span></pre>
+      </div>
+      <div class="note danger"><span class="ico">🛑</span><div><strong>If they show your home IP, STOP.</strong> The VPN is not working. Check <code>docker logs gluetun</code> for errors.</div></div>
+    </div>
+
+    <div class="card">
+      <h3 style="font-size:1rem;margin-bottom:10px">7.2 · Hardware transcoding test</h3>
+      <ol class="steps">
+        <li><strong>Play a video that needs transcoding</strong><p>Force a lower quality setting in Jellyfin.</p></li>
+        <li><strong>Check for the GPU in ffmpeg</strong>
+          <div class="cmd">
+            <div class="cmd-title"><span class="n">15</span> Inspect ffmpeg args
+              <button class="copy-btn" data-copy="docker exec jellyfin ps aux | grep ffmpeg">Copy</button>
+            </div>
+            <pre>docker exec jellyfin ps aux | grep ffmpeg<span class="cmt">
+# look for hwaccel or qsv in the arguments</span></pre>
+          </div>
+        </li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h3 style="font-size:1rem;margin-bottom:10px">7.3 · Hardlink test</h3>
+      <div class="cmd">
+        <div class="cmd-title"><span class="n">16</span> Compare inode numbers
+          <button class="copy-btn" data-copy="ls -li /mnt/media/complete/&lt;file&gt;
+ls -li /mnt/media/tv/&lt;series&gt;/&lt;episode&gt;">Copy</button>
+        </div>
+        <pre>ls -li /mnt/media/complete/&lt;downloaded-file&gt;
+ls -li /mnt/media/tv/&lt;series&gt;/&lt;episode-file&gt;<span class="cmt">
+# The inode number (first column) must be IDENTICAL.</span></pre>
+      </div>
+      <div class="note warn"><span class="ico">🔗</span><div>If the inodes differ, hardlinks are <strong>not</strong> working — check your volume mounts (<code>/mnt/media:/data</code>) and the Sonarr/Radarr hardlink setting.</div></div>
+    </div>
+  </section>
+
+  <!-- PHASE 8 -->
+  <section id="tv" data-mode="build">
+    <div class="section-head">
+      <span class="phase">Phase 8</span>
+      <h2>TV Setup (Wireless Streaming)</h2>
+    </div>
+    <p class="lead">No HDMI cable needed — the TV pulls video over Wi-Fi or Ethernet.</p>
+
+    <div class="tv-grid">
+      <div class="tv"><div class="plat">Android TV / Google TV</div><div class="store">Jellyfin · Google Play Store</div></div>
+      <div class="tv"><div class="plat">Samsung Tizen</div><div class="store">Jellyfin · Samsung App Store</div></div>
+      <div class="tv"><div class="plat">LG webOS</div><div class="store">Jellyfin · LG Content Store</div></div>
+      <div class="tv"><div class="plat">Apple TV</div><div class="store">Jellyfin · App Store</div></div>
+      <div class="tv"><div class="plat">Roku</div><div class="store">Jellyfin · Roku Channel Store</div></div>
+      <div class="tv"><div class="plat">Fire TV</div><div class="store">Jellyfin · Amazon Appstore</div></div>
+    </div>
+
+    <div class="note ok" style="margin-top:14px"><span class="ico">📺</span><div><strong>Point the app at your server:</strong> <code>http://&lt;mini-pc-IP&gt;:8096</code> — or <code>http://mediabox:8096</code> if you use local DNS or Tailscale. Open the app, play something, and verify it streams.</div></div>
+  </section>
+
+  <!-- PHASE 9 -->
+  <section id="remote" data-mode="build">
+    <div class="section-head">
+      <span class="phase">Phase 9</span>
+      <h2>Remote Access (Tailscale)</h2>
+    </div>
+    <p class="lead">Install Tailscale on your phone/laptop and log in with the same account used for the auth key.</p>
+    <div class="card">
+      <ul class="checklist">
+        <li><label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer"><input type="checkbox" id="t1" data-persist><span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt"><strong>Install Tailscale on your phone/laptop</strong>Log in with the same account</span></label></li>
+        <li><label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer"><input type="checkbox" id="t2" data-persist><span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt"><strong>Verify remote streaming works</strong>Watch <code style="font-family:var(--mono)">http://mediabox:8096</code> from outside your home network</span></label></li>
+      </ul>
+      <p style="color:var(--text-dim);font-size:.85rem;margin-top:6px">Once connected: <strong>Watch</strong> <code style="font-family:var(--mono)">http://mediabox:8096</code> · <strong>Request</strong> <code style="font-family:var(--mono)">http://mediabox:5055</code> · <strong>Manage</strong> <code style="font-family:var(--mono)">http://mediabox:8989</code>. Hardware transcoding handles format conversion for mobile playback.</p>
+    </div>
+  </section>
+
+  <!-- PHASE 10 -->
+  <section id="daily" data-mode="build">
+    <div class="section-head">
+      <span class="phase">Phase 10</span>
+      <h2>Daily Operation</h2>
+    </div>
+    <p class="lead">New episodes appear automatically. Requests flow end-to-end. Here's what to keep an eye on.</p>
+
+    <div class="card">
+      <p style="color:var(--text-dim);font-size:.88rem"><strong style="color:var(--text)">New episodes:</strong> Sonarr monitors your series and grabs new episodes as they air — they show up in Jellyfin's "Recently Added" within minutes of completion.</p>
+      <p style="color:var(--text-dim);font-size:.88rem;margin-top:8px"><strong style="color:var(--text)">Requests:</strong> open Overseerr on your phone (<code style="font-family:var(--mono)">http://mediabox:5055</code> or via Tailscale), search, click <strong>Request</strong> — it flows through the whole pipeline automatically.</p>
+    </div>
+
+    <div class="card" style="padding:0;overflow:hidden">
+      <div class="table-wrap" style="margin:0">
+        <table class="time">
+          <thead><tr><th>Maintenance task</th><th>Frequency</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td>Check disk space</td><td>Weekly</td><td>df -h /mnt/media</td></tr>
+            <tr><td>Update containers</td><td>Monthly</td><td>docker compose pull &amp;&amp; up -d</td></tr>
+            <tr><td>Check Gluetun forwarded port</td><td>After Gluetun restart</td><td>docker logs gluetun | grep port</td></tr>
+            <tr><td>Update qBittorrent listening port</td><td>After Gluetun restart</td><td>paste new port in Connection settings</td></tr>
+            <tr><td>Backup <code style="font-family:var(--mono)">.env</code> + configs</td><td>Monthly</td><td>copy ~/mediabox</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- TROUBLESHOOTING -->
+  <section id="trouble" data-mode="build">
+    <div class="section-head">
+      <span class="phase">Fix</span>
+      <h2>Troubleshooting</h2>
+    </div>
+
+    <div class="card">
+      <h3 style="font-size:1rem;margin-bottom:10px">Gluetun won't connect</h3>
+      <div class="cmd">
+        <div class="cmd-title"><span class="n">17</span> Gluetun logs
+          <button class="copy-btn" data-copy="docker logs gluetun --tail 100">Copy</button>
+        </div>
+        <pre>docker logs gluetun --tail 100</pre>
+      </div>
+      <ul class="emergency" style="margin-top:6px"><li>Wrong WireGuard private key</li><li>ProtonVPN plan doesn't support WireGuard (paid plans do)</li><li><code style="font-family:var(--mono)">SERVER_REGIONS</code> doesn't match available servers</li></ul>
+    </div>
+
+    <div class="card">
+      <h3 style="font-size:1rem;margin-bottom:10px">qBittorrent WebUI not reachable</h3>
+      <ul class="emergency"><li>Use <code style="font-family:var(--mono)">http://&lt;mini-pc-IP&gt;:8081</code> — <strong>not</strong> <code style="font-family:var(--mono)">:8080</code></li><li>Confirm qBittorrent shares Gluetun's network namespace:</li></ul>
+      <div class="cmd">
+        <div class="cmd-title"><span class="n">18</span> Check network mode
+          <button class="copy-btn" data-copy="docker inspect -f '{{.HostConfig.NetworkMode}}' qbittorrent">Copy</button>
+        </div>
+        <pre>docker inspect -f '{{.HostConfig.NetworkMode}}' qbittorrent<span class="cmt">
+# should output: service:gluetun</span></pre>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 style="font-size:1rem;margin-bottom:10px">Port forwarding keeps changing</h3>
+      <p style="color:var(--text-dim);font-size:.88rem;margin-bottom:10px">ProtonVPN's forwarded port changes on every Gluetun restart. You can either update qBittorrent manually after each restart, or automate the sync.</p>
+      <div class="note warn"><span class="ico">⚠️</span><div><strong>Third-party helper.</strong> The container below is community-maintained (not official) and needs your qBittorrent password in plaintext env. Use only if you're comfortable with that.</div></div>
+      <div class="file-block">
+        <div class="fb-head">
+          <span class="fb-name"><svg viewBox="0 0 16 16" fill="none"><path d="M3 2h7l3 3v9H3z" stroke="currentColor" stroke-width="1.3"/><path d="M10 2v3h3" stroke="currentColor" stroke-width="1.3"/></svg>docker-compose.yml — optional port-sync service</span>
+          <button class="copy-btn" data-copy="  port-sync:
+    image: adxglock/qb-port-sync:latest
+    container_name: port-sync
+    network_mode: service:gluetun
+    environment:
+      QBITTORRENT_USERNAME: admin
+      QBITTORRENT_PASSWORD: your_password
+    volumes:
+      - ./gluetun:/tmp/gluetun:ro
+    restart: unless-stopped">Copy</button>
+        </div>
+        <pre>  port-sync:
+    image: adxglock/qb-port-sync:latest
+    container_name: port-sync
+    network_mode: service:gluetun
+    environment:
+      QBITTORRENT_USERNAME: admin
+      QBITTORRENT_PASSWORD: your_password
+    volumes:
+      - ./gluetun:/tmp/gluetun:ro
+    restart: unless-stopped</pre>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 style="font-size:1rem;margin-bottom:10px">Hardware transcoding not working</h3>
+      <ul class="emergency"><li>Verify the GPU is visible (<code style="font-family:var(--mono)">ls -la /dev/dri</code> → <code style="font-family:var(--mono)">renderD128</code> + <code style="font-family:var(--mono)">card0</code>)</li><li>Check the render group ID (<code style="font-family:var(--mono)">getent group render</code>)</li><li>Ensure the Jellyfin container has the right <code style="font-family:var(--mono)">group_add</code> and device mount</li><li>In Jellyfin, confirm Dashboard → Playback → Transcoding shows <strong>Intel QuickSync (QSV)</strong></li></ul>
+    </div>
+
+    <div class="card">
+      <h3 style="font-size:1rem;margin-bottom:10px">Hardlinks not working (files are copied)</h3>
+      <div class="cmd">
+        <div class="cmd-title"><span class="n">19</span> Confirm same filesystem
+          <button class="copy-btn" data-copy="df /mnt/media/complete /mnt/media/tv">Copy</button>
+        </div>
+        <pre>df /mnt/media/complete /mnt/media/tv<span class="cmt">
+# Both should show the SAME filesystem.</span></pre>
+      </div>
+      <ul class="emergency"><li>Enable "Use Hardlinks instead of Copy" in Sonarr/Radarr</li><li>Confirm the volume mount is <code style="font-family:var(--mono)">/mnt/media:/data</code> (one mount, not separate ones)</li></ul>
+    </div>
+  </section>
+
+  <!-- POST-SETUP -->
+  <section id="done" data-mode="build">
+    <div class="section-head">
+      <span class="num">✓</span>
+      <h2>Post-Setup Checklist</h2>
+    </div>
+    <p class="lead">Everything that must be true for the box to be "done".</p>
+    <div class="card">
+      <ul class="checklist">
+        <li><label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer"><input type="checkbox" id="d1" data-persist><span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt"><strong>Ubuntu Server installed and updated</strong></span></label></li>
+        <li><label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer"><input type="checkbox" id="d2" data-persist><span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt"><strong>4TB HDD formatted ext4 and mounted at /mnt/media</strong></span></label></li>
+        <li><label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer"><input type="checkbox" id="d3" data-persist><span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt"><strong>Docker + Docker Compose installed</strong></span></label></li>
+        <li><label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer"><input type="checkbox" id="d4" data-persist><span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt"><strong>.env created with WireGuard + Tailscale keys</strong></span></label></li>
+        <li><label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer"><input type="checkbox" id="d5" data-persist><span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt"><strong>All containers running</strong><code style="font-family:var(--mono)">docker compose ps</code></span></label></li>
+        <li><label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer"><input type="checkbox" id="d6" data-persist><span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt"><strong>Gluetun connected to ProtonVPN (verified via ifconfig.me)</strong></span></label></li>
+        <li><label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer"><input type="checkbox" id="d7" data-persist><span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt"><strong>qBittorrent WebUI accessible, password changed</strong></span></label></li>
+        <li><label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer"><input type="checkbox" id="d8" data-persist><span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt"><strong>Sonarr + Radarr configured, hardlinks enabled</strong></span></label></li>
+        <li><label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer"><input type="checkbox" id="d9" data-persist><span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt"><strong>Prowlarr indexers added and synced</strong></span></label></li>
+        <li><label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer"><input type="checkbox" id="d10" data-persist><span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt"><strong>Jellyfin libraries added, QSV transcode enabled</strong></span></label></li>
+        <li><label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer"><input type="checkbox" id="d11" data-persist><span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt"><strong>Overseerr linked to Sonarr/Radarr</strong></span></label></li>
+        <li><label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer"><input type="checkbox" id="d12" data-persist><span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt"><strong>Jellyfin app installed on TV, streaming works</strong></span></label></li>
+        <li><label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer"><input type="checkbox" id="d13" data-persist><span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt"><strong>Tailscale remote access working</strong></span></label></li>
+        <li><label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer"><input type="checkbox" id="d14" data-persist><span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt"><strong>Test download via Overseerr appears in Jellyfin</strong></span></label></li>
+        <li><label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer"><input type="checkbox" id="d15" data-persist><span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt"><strong>Kill-switch verified (qBittorrent shows VPN IP)</strong></span></label></li>
+        <li><label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer"><input type="checkbox" id="d16" data-persist><span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt"><strong>Hardlink verified (inode numbers match)</strong></span></label></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3 style="font-size:1rem;margin-bottom:10px">Estimated time</h3>
+      <div class="table-wrap" style="margin:0">
+        <table class="time">
+          <thead><tr><th>Phase</th><th>Time</th></tr></thead>
+          <tbody>
+            <tr><td>OS installation + BIOS config</td><td>30–45 min</td></tr>
+            <tr><td>Media drive prep</td><td>10 min</td></tr>
+            <tr><td>Docker installation</td><td>5 min</td></tr>
+            <tr><td>ProtonVPN + Tailscale keys</td><td>10 min</td></tr>
+            <tr><td>Compose deployment</td><td>5 min</td></tr>
+            <tr><td>First-run configuration</td><td>30–45 min</td></tr>
+            <tr><td>Verification</td><td>10 min</td></tr>
+            <tr><td>TV setup</td><td>5 min</td></tr>
+            <tr class="total"><td>Total</td><td>~1.5–2.5 hours</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="color:var(--text-dim);font-size:.85rem;margin-top:12px">One evening of setup, then: new episodes just appear on the TV.</p>
+    </div>
+  </section>
+
 </main>
 
 <footer>
-  <p class="oneliner">Buy a GMKtec G2 (N100, 12GB, 512GB) for ~€140 in Shenzhen, pair it with a 4TB WD My Passport from Beslist.nl (€107.49), and you've saved €235–€282 versus the ASUS PN42 build — with the same Docker stack and the same wireless TV streaming.</p>
-  <p>Shenzhen PC Hunt · November 2026 · Works offline · State saved locally</p>
+  <p class="oneliner">Two chapters, one machine: buy a GMKtec G2 (N100, 12GB, 512GB) for ~€140 in Shenzhen, pair it with a 4TB WD My Passport, then run this playbook to turn it into a Jellyfin media server with Sonarr, Radarr, Overseerr, a ProtonVPN kill-switch, and wireless TV streaming anywhere via Tailscale.</p>
+  <p>Media Server Playbook · Works offline · State saved locally</p>
 </footer>
 
 <div class="toast" id="toast">
@@ -1402,6 +2360,11 @@ sudo dmidecode -t memory | grep -E "Size|Speed|Type"
     document.querySelectorAll('input[type="checkbox"][data-persist]')
   );
 
+  function modeOf(el) {
+    var sec = el.closest ? el.closest('section') : null;
+    return (sec && sec.getAttribute('data-mode')) || 'buy';
+  }
+
   persisted.forEach(function (cb) {
     if (state[cb.id]) cb.checked = true;
     cb.addEventListener('change', function () {
@@ -1415,15 +2378,47 @@ sudo dmidecode -t memory | grep -E "Size|Speed|Type"
   var ringFg = document.getElementById('ringFg');
   var progressText = document.getElementById('progressText');
   var CIRC = 2 * Math.PI * 18;
+  var activeMode = state.__mode || 'buy';
 
   function updateProgress() {
-    var total = persisted.length;
-    var done = persisted.filter(function (cb) { return cb.checked; }).length;
+    var pool = persisted.filter(function (cb) { return modeOf(cb) === activeMode; });
+    var total = pool.length;
+    var done = pool.filter(function (cb) { return cb.checked; }).length;
     var pct = total ? done / total : 0;
     ringFg.style.strokeDashoffset = String(CIRC * (1 - pct));
     progressText.textContent = done + '/' + total;
   }
-  updateProgress();
+
+  /* ---------- Mode switching ---------- */
+  var modeBtns = Array.prototype.slice.call(document.querySelectorAll('#modes button'));
+  var tabLinks = Array.prototype.slice.call(document.querySelectorAll('#tabs a'));
+  var allSections = Array.prototype.slice.call(document.querySelectorAll('main > section[data-mode]'));
+
+  function setMode(mode) {
+    activeMode = mode;
+    state.__mode = mode;
+    save();
+
+    modeBtns.forEach(function (b) {
+      b.classList.toggle('active', b.getAttribute('data-mode') === mode);
+    });
+    tabLinks.forEach(function (a) {
+      a.classList.toggle('mode-hidden', a.getAttribute('data-mode') !== mode);
+    });
+    allSections.forEach(function (s) {
+      s.classList.toggle('mode-hidden', s.getAttribute('data-mode') !== mode);
+    });
+
+    updateProgress();
+    if (typeof refreshSpy === 'function') refreshSpy();
+  }
+
+  modeBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      setMode(b.getAttribute('data-mode'));
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
 
   /* ---------- Copy buttons ---------- */
   var toast = document.getElementById('toast');
@@ -1477,6 +2472,15 @@ sudo dmidecode -t memory | grep -E "Size|Speed|Type"
   document.querySelectorAll('.copy-btn').forEach(function (btn) {
     btn.addEventListener('click', function (e) {
       e.stopPropagation();
+      var fileKey = btn.getAttribute('data-copy-file');
+      if (fileKey === 'compose') {
+        var src = document.getElementById('composeYaml');
+        if (src) {
+          /* textContent drops the <span class="cmt"> markup but keeps the comment text */
+          copyText(src.textContent.trim() + '\n', btn);
+          return;
+        }
+      }
       copyText(btn.getAttribute('data-copy'), btn);
     });
   });
@@ -1627,20 +2631,29 @@ sudo dmidecode -t memory | grep -E "Size|Speed|Type"
   document.getElementById('resetBtn').addEventListener('click', function () {
     if (!confirm('Reset all checkboxes and progress?')) return;
     persisted.forEach(function (cb) { cb.checked = false; });
-    state = {};
+    var keepMode = state.__mode;
+    state = keepMode ? { __mode: keepMode } : {};
     save();
     updateProgress();
     showToast('Progress reset');
   });
 
   /* ---------- Nav scroll-spy ---------- */
-  var tabLinks = Array.prototype.slice.call(document.querySelectorAll('#tabs a'));
-  var sections = tabLinks
-    .map(function (a) { return document.querySelector(a.getAttribute('href')); })
-    .filter(Boolean);
+  function refreshSpy() {
+    if (spy) {
+      spy.disconnect();
+      visibleSections().forEach(function (s) { spy.observe(s); });
+    }
+  }
+
+  function visibleSections() {
+    return allSections.filter(function (s) { return !s.classList.contains('mode-hidden'); });
+  }
+
+  var spy = null;
 
   if ('IntersectionObserver' in window) {
-    var spy = new IntersectionObserver(function (entries) {
+    spy = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (!entry.isIntersecting) return;
         var id = '#' + entry.target.id;
@@ -1649,9 +2662,10 @@ sudo dmidecode -t memory | grep -E "Size|Speed|Type"
         });
       });
     }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
-
-    sections.forEach(function (s) { spy.observe(s); });
   }
+
+  /* ---------- Init ---------- */
+  setMode(activeMode);
 
 })();
 </script>
