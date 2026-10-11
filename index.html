@@ -183,6 +183,98 @@
 
   .mode-hidden { display: none !important; }
 
+  /* ---------- Hardware split (What I'm Buying) ---------- */
+  .hw-split {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .hw-card {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px;
+  }
+
+  .hw-head {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    margin-bottom: 16px;
+  }
+
+  .hw-head .hw-ico {
+    font-size: 1.5rem;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .hw-head h3 {
+    font-size: 1.02rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .hw-head p {
+    font-size: .85rem;
+    color: var(--text-dim);
+    max-width: 60ch;
+  }
+
+  .hw-card[data-project="netflix"] { border-left: 3px solid var(--accent); }
+  .hw-card[data-project="voice"] { border-left: 3px solid var(--green); }
+
+  .ck-group {
+    font-size: .95rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 4px 0 2px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .ck-group + .checklist { margin-top: 4px; }
+  .checklist + .ck-group { margin-top: 24px; }
+
+  @media (min-width: 860px) {
+    .hw-split { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* ---------- Project switcher (build mode) ---------- */
+  .projects {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 8px 20px 0;
+    display: flex;
+    gap: 8px;
+  }
+
+  .projects button {
+    font-family: var(--sans);
+    font-size: .78rem;
+    font-weight: 600;
+    color: var(--text-dim);
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    padding: 5px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all .15s;
+    white-space: nowrap;
+  }
+
+  .projects button:hover { color: var(--text); border-color: var(--border-2); }
+
+  .projects button.active {
+    color: var(--green);
+    background: rgba(63,185,80,.1);
+    border-color: rgba(63,185,80,.4);
+  }
+
+  .project-hidden { display: none !important; }
+
   /* ---------- File block (compose / env / fstab) ---------- */
   .file-block {
     background: var(--bg-2);
@@ -1097,30 +1189,36 @@
     <button data-mode="buy" class="active">🛒 Shenzhen Hunt</button>
     <button data-mode="build">🖥️ Build &amp; Deploy</button>
   </div>
+  <div class="projects" id="projects">
+    <button data-project="netflix" class="active">🎬 Home Netflix</button>
+    <button data-project="voice">🗣️ Home Voice Assistant</button>
+  </div>
   <nav class="tabs" id="tabs">
     <a href="#target" data-mode="buy">Target</a>
-    <a href="#prices" data-mode="buy">Prices</a>
-    <a href="#calc" data-mode="buy">Calculator</a>
-    <a href="#verify" data-mode="buy">Verify</a>
+    <a href="#prices" data-mode="buy" data-project="netflix">Prices</a>
+    <a href="#calc" data-mode="buy" data-project="netflix">Calculator</a>
+    <a href="#verify" data-mode="buy" data-project="netflix">Verify</a>
     <a href="#where" data-mode="buy">Where</a>
     <a href="#negotiate" data-mode="buy">Negotiate</a>
-    <a href="#decision" data-mode="buy">Decide</a>
-    <a href="#tablets" data-mode="buy">Tablets</a>
+    <a href="#decision" data-mode="buy" data-project="netflix">Decide</a>
+    <a href="#tablets" data-mode="buy" data-project="voice">Tablet</a>
     <a href="#checklist" data-mode="buy">Checklist</a>
     <a href="#emergency" data-mode="buy">Emergency</a>
-    <a href="#prereq" data-mode="build">Prereqs</a>
-    <a href="#install" data-mode="build">OS</a>
-    <a href="#drive" data-mode="build">Drive</a>
-    <a href="#docker" data-mode="build">Docker</a>
-    <a href="#keys" data-mode="build">Keys</a>
-    <a href="#stack" data-mode="build">Stack</a>
-    <a href="#configure" data-mode="build">Configure</a>
-    <a href="#verify2" data-mode="build">Verify</a>
-    <a href="#tv" data-mode="build">TV</a>
-    <a href="#remote" data-mode="build">Remote</a>
-    <a href="#daily" data-mode="build">Daily</a>
-    <a href="#trouble" data-mode="build">Fix</a>
-    <a href="#done" data-mode="build">Done</a>
+    <a href="#prereq" data-mode="build" data-project="netflix">Prereqs</a>
+    <a href="#install" data-mode="build" data-project="netflix">OS</a>
+    <a href="#drive" data-mode="build" data-project="netflix">Drive</a>
+    <a href="#docker" data-mode="build" data-project="netflix">Docker</a>
+    <a href="#keys" data-mode="build" data-project="netflix">Keys</a>
+    <a href="#stack" data-mode="build" data-project="netflix">Stack</a>
+    <a href="#configure" data-mode="build" data-project="netflix">Configure</a>
+    <a href="#verify2" data-mode="build" data-project="netflix">Verify</a>
+    <a href="#tv" data-mode="build" data-project="netflix">TV</a>
+    <a href="#remote" data-mode="build" data-project="netflix">Remote</a>
+    <a href="#daily" data-mode="build" data-project="netflix">Daily</a>
+    <a href="#trouble" data-mode="build" data-project="netflix">Fix</a>
+    <a href="#done" data-mode="build" data-project="netflix">Done</a>
+    <a href="#voice" data-mode="build" data-project="voice">Voice</a>
+    <a href="#voice-done" data-mode="build" data-project="voice">Done</a>
   </nav>
 </header>
 
@@ -1132,46 +1230,87 @@
       <span class="num">01</span>
       <h2>What I'm Buying</h2>
     </div>
-    <p class="lead">A mini PC that runs the full Docker media stack — Jellyfin, Sonarr, Radarr, Prowlarr, Overseerr, qBittorrent, Gluetun, Tailscale — with hardware transcoding for remote streaming.</p>
+    <p class="lead">Two devices, one trip to Huaqiangbei. Use the <strong>🎬 Home Netflix</strong> / <strong>🗣️ Voice</strong> switch above to filter the purchase sections for each.</p>
 
-    <div class="spec-grid">
-      <div class="spec">
-        <div class="label">CPU · <span class="must">MUST</span></div>
-        <div class="value">Intel N100 / N150 <span style="color:var(--text-faint)">or</span> AMD Ryzen 7 5700U</div>
+    <div class="hw-split">
+      <div class="hw-card" data-project="netflix">
+        <div class="hw-head">
+          <span class="hw-ico">🎬</span>
+          <div><h3>Mini PC — Home Netflix</h3><p>Runs the full Docker media stack: Jellyfin, Sonarr, Radarr, Prowlarr, Overseerr, qBittorrent, Gluetun, Tailscale — with hardware transcoding for remote streaming.</p></div>
+        </div>
+        <div class="spec-grid">
+          <div class="spec">
+            <div class="label">CPU · <span class="must">MUST</span></div>
+            <div class="value">Intel N100 / N150 <span style="color:var(--text-faint)">or</span> AMD Ryzen 7 5700U</div>
+          </div>
+          <div class="spec">
+            <div class="label">Transcoding · <span class="must">MUST</span></div>
+            <div class="value">Intel Quick Sync or AMD Vega iGPU</div>
+          </div>
+          <div class="spec">
+            <div class="label">RAM · <span class="must">MUST</span></div>
+            <div class="value mono">16GB min (or upgradable SO-DIMM)</div>
+          </div>
+          <div class="spec">
+            <div class="label">OS Drive · <span class="must">MUST</span></div>
+            <div class="value mono">256GB+ SSD</div>
+          </div>
+          <div class="spec">
+            <div class="label">Network · <span class="must">MUST</span></div>
+            <div class="value">1× Ethernet (2.5G preferred)</div>
+          </div>
+          <div class="spec">
+            <div class="label">Wi-Fi 6 · <span class="nice">NICE</span></div>
+            <div class="value">Backup if Ethernet unavailable</div>
+          </div>
+          <div class="spec">
+            <div class="label">Dual LAN · <span class="nice">NICE</span></div>
+            <div class="value">2.5G dual ports</div>
+          </div>
+          <div class="spec">
+            <div class="label">Fanless · <span class="nice">NICE</span></div>
+            <div class="value">Silent operation</div>
+          </div>
+        </div>
       </div>
-      <div class="spec">
-        <div class="label">Transcoding · <span class="must">MUST</span></div>
-        <div class="value">Intel Quick Sync or AMD Vega iGPU</div>
-      </div>
-      <div class="spec">
-        <div class="label">RAM · <span class="must">MUST</span></div>
-        <div class="value mono">16GB min (or upgradable SO-DIMM)</div>
-      </div>
-      <div class="spec">
-        <div class="label">OS Drive · <span class="must">MUST</span></div>
-        <div class="value mono">256GB+ SSD</div>
-      </div>
-      <div class="spec">
-        <div class="label">Network · <span class="must">MUST</span></div>
-        <div class="value">1× Ethernet (2.5G preferred)</div>
-      </div>
-      <div class="spec">
-        <div class="label">Wi-Fi 6 · <span class="nice">NICE</span></div>
-        <div class="value">Backup if Ethernet unavailable</div>
-      </div>
-      <div class="spec">
-        <div class="label">Dual LAN · <span class="nice">NICE</span></div>
-        <div class="value">2.5G dual ports</div>
-      </div>
-      <div class="spec">
-        <div class="label">Fanless · <span class="nice">NICE</span></div>
-        <div class="value">Silent operation</div>
+
+      <div class="hw-card" data-project="voice">
+        <div class="hw-head">
+          <span class="hw-ico">🗣️</span>
+          <div><h3>Tablet — Home Voice Assistant</h3><p>Wall-mounted Home Assistant dashboard with hands-free voice control. <strong>Kiosk Satellite</strong> is free, fully local, subscription-free — wake word runs on-device.</p></div>
+        </div>
+        <div class="spec-grid">
+          <div class="spec">
+            <div class="label">Android · <span class="must">MUST</span></div>
+            <div class="value">Android 8+ (Kiosk Satellite needs 7+)</div>
+          </div>
+          <div class="spec">
+            <div class="label">RAM · <span class="must">MUST</span></div>
+            <div class="value mono">4GB min, 6–8GB preferred</div>
+          </div>
+          <div class="spec">
+            <div class="label">Microphone · <span class="must">MUST</span></div>
+            <div class="value">Decent mic — wake word runs on-device</div>
+          </div>
+          <div class="spec">
+            <div class="label">Brand · <span class="must">MUST</span></div>
+            <div class="value">Xiaomi / Lenovo only — no white-label</div>
+          </div>
+          <div class="spec">
+            <div class="label">Google Play · <span class="nice">NICE</span></div>
+            <div class="value">Not required — app installs via APK</div>
+          </div>
+          <div class="spec">
+            <div class="label">Charge limit · <span class="nice">NICE</span></div>
+            <div class="value">80% battery cap (swell protection)</div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- PRICES -->
-  <section id="prices" data-mode="buy">
+  <section id="prices" data-mode="buy" data-project="netflix">
     <div class="section-head">
       <span class="num">02</span>
       <h2>Price Anchors</h2>
@@ -1249,7 +1388,7 @@
   </section>
 
   <!-- CALCULATOR -->
-  <section id="calc" data-mode="buy">
+  <section id="calc" data-mode="buy" data-project="netflix">
     <div class="section-head">
       <span class="num">03</span>
       <h2>Budget Calculator</h2>
@@ -1301,7 +1440,7 @@
   </section>
 
   <!-- VERIFY -->
-  <section id="verify" data-mode="buy">
+  <section id="verify" data-mode="buy" data-project="netflix">
     <div class="section-head">
       <span class="num">04</span>
       <h2>Verification Commands</h2>
@@ -1418,28 +1557,30 @@ sudo dmidecode -t memory | grep -E "Size|Speed|Type"
       <span class="num">05</span>
       <h2>Where to Go</h2>
     </div>
-    <p class="lead">Shenzhen's mini PC sector is concentrated in Huaqiangbei. Here's how the venues compare.</p>
+    <p class="lead">Both devices live in the same district — it's <strong>one trip</strong>. Here's how the venues compare, and which device each is best for.</p>
+
+    <div class="note"><span class="ico">🧭</span><div><strong>Same stores, one trip:</strong> Huaqiangbei and 顺电/Suning serve <em>both</em> the mini PC and the tablet. Xianyu is the same online channel for both (used Ryzen PCs and used Lenovo tablets). Only the <em>brand dealers</em> are PC-specific — Xiaomi/Lenovo tablets come from brand stores or the same stalls.</div></div>
 
     <div class="grid">
       <div class="place">
-        <div class="role">Best for no-name &amp; used</div>
+        <div class="role">Best for no-name &amp; used · <span style="color:var(--accent)">PC</span> + <span style="color:var(--green)">Tablet</span></div>
         <h4>Huaqiangbei 华强北</h4>
-        <p>SEG Market, Huaqiang Electronics World. Hundreds of stalls, overwhelming. Haggling expected. Best prices, highest risk.</p>
+        <p>SEG Market, Huaqiang Electronics World. Hundreds of stalls, overwhelming. Haggling expected. Best prices, highest risk. Tablets are "available at every second stall."</p>
       </div>
       <div class="place">
-        <div class="role">Best for warranty</div>
+        <div class="role">Best for warranty · <span style="color:var(--accent)">PC</span></div>
         <h4>Brand dealers</h4>
-        <p>Beelink and GMKtec showrooms. Official pricing, international warranty, less haggling. Safer but slightly pricier.</p>
+        <p>Beelink and GMKtec showrooms. Official pricing, international warranty, less haggling. Safer but slightly pricier. (Tablets: use Xiaomi/Lenovo brand stores nearby.)</p>
       </div>
       <div class="place">
-        <div class="role">Best for used Ryzen</div>
+        <div class="role">Best for used · <span style="color:var(--accent)">PC</span> + <span style="color:var(--green)">Tablet</span></div>
         <h4>Xianyu 闲鱼</h4>
-        <p>China's second-hand marketplace. Batches of ex-corporate Ryzen 7 5700U mini PCs appear and sell out within hours. Check daily.</p>
+        <p>China's second-hand marketplace. Batches of ex-corporate Ryzen mini PCs <em>and</em> used Lenovo Tab M11 tablets appear and sell out within hours. Check daily for both.</p>
       </div>
       <div class="place">
-        <div class="role">Research only</div>
+        <div class="role">Research only · <span style="color:var(--accent)">PC</span> + <span style="color:var(--green)">Tablet</span></div>
         <h4>顺电 / Suning</h4>
-        <p>Retail electronics chains in Huaqiangbei. Good for hands-on testing, but you'll pay retail prices. Use for recon, not buying.</p>
+        <p>Retail electronics chains in Huaqiangbei. Good for hands-on testing of both PCs and tablets, but you'll pay retail prices. Use for recon, not buying.</p>
       </div>
     </div>
   </section>
@@ -1462,7 +1603,7 @@ sudo dmidecode -t memory | grep -E "Size|Speed|Type"
   </section>
 
   <!-- DECISION -->
-  <section id="decision" data-mode="buy">
+  <section id="decision" data-mode="buy" data-project="netflix">
     <div class="section-head">
       <span class="num">07</span>
       <h2>Decision Tree</h2>
@@ -1483,7 +1624,7 @@ sudo dmidecode -t memory | grep -E "Size|Speed|Type"
   </section>
 
   <!-- TABLETS -->
-  <section id="tablets" data-mode="buy">
+  <section id="tablets" data-mode="buy" data-project="voice">
     <div class="section-head">
       <span class="num">08</span>
       <h2>Tablet for the HA Voice Kiosk</h2>
@@ -1586,27 +1727,7 @@ sudo dmidecode -t memory | grep -E "Size|Speed|Type"
       <p style="font-size:.88rem;color:var(--text-dim)">¥899 ZOL baseline, Helio G85 is plenty for dashboards, available at every second stall, HyperOS lets you disable battery restrictions for the kiosk app. Upgrade to the Xiaomi Pad 7 (¥1,999) only if you want 144Hz smoothness for camera feeds. Either way: automate a 20–80% smart-plug charge cycle in Home Assistant — a tablet parked at 100% on permanent power will swell its battery within 1–2 years.</p>
     </div>
 
-    <div class="card" style="margin-top:12px">
-      <h4 style="font-size:1rem;margin-bottom:14px">🛠 Install &amp; configure plan</h4>
-      <p style="font-size:.82rem;color:var(--text-faint);margin-bottom:10px"><strong style="color:var(--text)">On the Home Assistant Green</strong> — do this before the trip; it needs no tablet</p>
-      <ul class="nego">
-        <li><strong>Install the Wyoming add-ons:</strong> Settings → Add-ons → Add-on store → Piper (TTS), openWakeWord, and wyoming-onnx-asr (STT). On the Green's modest hardware, onnx-asr/Parakeet is noticeably lighter than faster-whisper.</li>
-        <li><strong>Build a local Assist pipeline:</strong> Settings → Voice assistants → Add assistant → pick local STT + Piper + openWakeWord. Everything stays on the LAN — no Nabu Casa subscription.</li>
-        <li><strong>Install HACS:</strong> Settings → Apps → add repository github.com/hacs/addons → install "Get HACS" → restart Home Assistant.</li>
-        <li><strong>Install Voice Satellite:</strong> HACS → Custom repositories → add jxlarrea/voice-satellite-card-integration → download → restart. (With Kiosk Satellite's built-in voice you can skip this — but installing it costs nothing and covers both setups.)</li>
-      </ul>
-      <p style="font-size:.82rem;color:var(--text-faint);margin:14px 0 10px"><strong style="color:var(--text)">On the tablet</strong> — ~10 minutes, APK only, no Play Store or Google account needed (works fine on Chinese ROMs)</p>
-      <ul class="nego">
-        <li><strong>Create a long-lived access token:</strong> HA → your profile → Security → Long-lived access tokens → copy it somewhere safe.</li>
-        <li><strong>Sideload Kiosk Satellite:</strong> download the APK from the project's GitHub releases page; allow "install from unknown sources" once when prompted.</li>
-        <li><strong>Run the setup wizard:</strong> enter your HA URL (http://homeassistant.local:8123) + the token → pick your dashboard → leave Voice Satellite enabled → choose wake word (e.g. "Okay Nabu") and the local pipeline.</li>
-        <li><strong>Confirm discovery:</strong> the tablet shows up under Settings → Devices &amp; services on the Green → assign it to a room/area.</li>
-        <li><strong>Enable the ESPHome connection</strong> in the app settings → screen, volume, motion, and battery become HA entities you can automate.</li>
-        <li><strong>Kill battery restrictions:</strong> Xiaomi/HyperOS → Settings → Apps → Kiosk Satellite → Battery saver → No restrictions. Otherwise Android will freeze the wake word overnight.</li>
-        <li><strong>Protect the battery:</strong> automation on the smart plug — OFF at 80%, ON at 20% (uses the battery sensor from the step above).</li>
-        <li><strong>Optional — remote admin UI:</strong> browse to http://&lt;tablet-ip&gt;:2324 from your laptop for fine-tuning without touching the wall mount.</li>
-      </ul>
-    </div>
+    <div class="note"><span class="ico">🛠️</span><div><strong>Install &amp; configure:</strong> the voice kiosk setup plan now lives in the <strong>Build &amp; Deploy</strong> chapter → <em>Home Voice Assistant</em>. Switch modes above.</div></div>
   </section>
 
   <!-- CHECKLIST -->
@@ -1615,10 +1736,11 @@ sudo dmidecode -t memory | grep -E "Size|Speed|Type"
       <span class="num">09</span>
       <h2>Pre-Purchase Checklist</h2>
     </div>
-    <p class="lead">Tick these off before you leave the hotel. Your progress is saved automatically.</p>
+    <p class="lead">Tick these off before you leave the hotel. Your progress is saved automatically. Items are grouped by device — the trip prep applies to both.</p>
 
     <div class="card">
-      <ul class="checklist">
+      <h3 class="ck-group" data-project="netflix">🎬 Mini PC · Home Netflix</h3>
+      <ul class="checklist" data-project="netflix">
         <li>
           <label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer">
             <input type="checkbox" id="c1" data-persist>
@@ -1675,11 +1797,36 @@ sudo dmidecode -t memory | grep -E "Size|Speed|Type"
             <span class="txt"><strong>This checklist saved offline</strong>Bookmark it, or print it</span>
           </label>
         </li>
+      </ul>
+
+      <h3 class="ck-group" data-project="voice">🗣️ Tablet · Home Voice Assistant</h3>
+      <ul class="checklist" data-project="voice">
         <li>
           <label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer">
             <input type="checkbox" id="c9" data-persist>
             <span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
             <span class="txt"><strong>Tablet ZOL screenshots saved</strong>Redmi Pad SE ¥899 — your anchor for the kiosk tablet</span>
+          </label>
+        </li>
+        <li>
+          <label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer">
+            <input type="checkbox" id="c10" data-persist>
+            <span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="txt"><strong>Xianyu tablet listings screenshots saved</strong>Used Lenovo Tab M11 ¥600–800</span>
+          </label>
+        </li>
+        <li>
+          <label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer">
+            <input type="checkbox" id="c11" data-persist>
+            <span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="txt"><strong>Test-mic plan ready</strong>Wake word runs on-device — try the mic before buying</span>
+          </label>
+        </li>
+        <li>
+          <label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer">
+            <input type="checkbox" id="c12" data-persist>
+            <span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="txt"><strong>Charge-limit plan noted</strong>20–80% smart-plug cycle to protect the battery</span>
           </label>
         </li>
       </ul>
@@ -1709,7 +1856,7 @@ sudo dmidecode -t memory | grep -E "Size|Speed|Type"
   <!-- ============================================================ -->
 
   <!-- PREREQS -->
-  <section id="prereq" data-mode="build">
+  <section id="prereq" data-mode="build" data-project="netflix">
     <div class="section-head">
       <span class="num">B0</span>
       <h2>Prerequisites</h2>
@@ -1765,7 +1912,7 @@ sudo dmidecode -t memory | grep -E "Size|Speed|Type"
   </section>
 
   <!-- PHASE 1 -->
-  <section id="install" data-mode="build">
+  <section id="install" data-mode="build" data-project="netflix">
     <div class="section-head">
       <span class="phase">Phase 1</span>
       <h2>OS Installation</h2>
@@ -1833,7 +1980,7 @@ sudo apt install -y curl wget nano htop</pre>
   </section>
 
   <!-- PHASE 2 -->
-  <section id="drive" data-mode="build">
+  <section id="drive" data-mode="build" data-project="netflix">
     <div class="section-head">
       <span class="phase">Phase 2</span>
       <h2>Media Drive Preparation</h2>
@@ -1900,7 +2047,7 @@ sudo chown -R 1000:1000 /mnt/media</pre>
   </section>
 
   <!-- PHASE 3 -->
-  <section id="docker" data-mode="build">
+  <section id="docker" data-mode="build" data-project="netflix">
     <div class="section-head">
       <span class="phase">Phase 3</span>
       <h2>Docker Installation</h2>
@@ -1930,7 +2077,7 @@ docker compose version<span class="cmt">
   </section>
 
   <!-- PHASE 4 -->
-  <section id="keys" data-mode="build">
+  <section id="keys" data-mode="build" data-project="netflix">
     <div class="section-head">
       <span class="phase">Phase 4</span>
       <h2>ProtonVPN + Tailscale Keys</h2>
@@ -1957,7 +2104,7 @@ docker compose version<span class="cmt">
   </section>
 
   <!-- PHASE 5 -->
-  <section id="stack" data-mode="build">
+  <section id="stack" data-mode="build" data-project="netflix">
     <div class="section-head">
       <span class="phase">Phase 5</span>
       <h2>Deploy the Docker Stack</h2>
@@ -2139,7 +2286,7 @@ docker compose ps<span class="cmt">
   </section>
 
   <!-- PHASE 6 -->
-  <section id="configure" data-mode="build">
+  <section id="configure" data-mode="build" data-project="netflix">
     <div class="section-head">
       <span class="phase">Phase 6</span>
       <h2>First-Run Configuration</h2>
@@ -2218,7 +2365,7 @@ getent group render<span class="cmt">
   </section>
 
   <!-- PHASE 7 -->
-  <section id="verify2" data-mode="build">
+  <section id="verify2" data-mode="build" data-project="netflix">
     <div class="section-head">
       <span class="phase">Phase 7</span>
       <h2>Verification</h2>
@@ -2272,7 +2419,7 @@ ls -li /mnt/media/tv/&lt;series&gt;/&lt;episode-file&gt;<span class="cmt">
   </section>
 
   <!-- PHASE 8 -->
-  <section id="tv" data-mode="build">
+  <section id="tv" data-mode="build" data-project="netflix">
     <div class="section-head">
       <span class="phase">Phase 8</span>
       <h2>TV Setup (Wireless Streaming)</h2>
@@ -2292,7 +2439,7 @@ ls -li /mnt/media/tv/&lt;series&gt;/&lt;episode-file&gt;<span class="cmt">
   </section>
 
   <!-- PHASE 9 -->
-  <section id="remote" data-mode="build">
+  <section id="remote" data-mode="build" data-project="netflix">
     <div class="section-head">
       <span class="phase">Phase 9</span>
       <h2>Remote Access (Tailscale)</h2>
@@ -2308,7 +2455,7 @@ ls -li /mnt/media/tv/&lt;series&gt;/&lt;episode-file&gt;<span class="cmt">
   </section>
 
   <!-- PHASE 10 -->
-  <section id="daily" data-mode="build">
+  <section id="daily" data-mode="build" data-project="netflix">
     <div class="section-head">
       <span class="phase">Phase 10</span>
       <h2>Daily Operation</h2>
@@ -2337,7 +2484,7 @@ ls -li /mnt/media/tv/&lt;series&gt;/&lt;episode-file&gt;<span class="cmt">
   </section>
 
   <!-- TROUBLESHOOTING -->
-  <section id="trouble" data-mode="build">
+  <section id="trouble" data-mode="build" data-project="netflix">
     <div class="section-head">
       <span class="phase">Fix</span>
       <h2>Troubleshooting</h2>
@@ -2416,7 +2563,7 @@ ls -li /mnt/media/tv/&lt;series&gt;/&lt;episode-file&gt;<span class="cmt">
   </section>
 
   <!-- POST-SETUP -->
-  <section id="done" data-mode="build">
+  <section id="done" data-mode="build" data-project="netflix">
     <div class="section-head">
       <span class="num">✓</span>
       <h2>Post-Setup Checklist</h2>
@@ -2465,6 +2612,108 @@ ls -li /mnt/media/tv/&lt;series&gt;/&lt;episode-file&gt;<span class="cmt">
     </div>
   </section>
 
+  <!-- ================= HOME VOICE ASSISTANT ================= -->
+
+  <!-- VOICE OVERVIEW + SETUP -->
+  <section id="voice" data-mode="build" data-project="voice">
+    <div class="section-head">
+      <span class="phase">Voice</span>
+      <h2>Home Voice Assistant — Kiosk Setup</h2>
+    </div>
+    <p class="lead">The second build project: turn the Redmi Pad SE into a wall-mounted Home Assistant dashboard with hands-free voice control. <strong>Kiosk Satellite</strong> is free, fully local, and subscription-free — the wake word runs on-device.</p>
+
+    <div class="spec-grid">
+      <div class="spec">
+        <div class="label">Hub · <span class="must">MUST</span></div>
+        <div class="value">Home Assistant Green (or any HAOS host)</div>
+      </div>
+      <div class="spec">
+        <div class="label">Tablet · <span class="must">MUST</span></div>
+        <div class="value">Android 8+ · 4GB+ RAM</div>
+      </div>
+      <div class="spec">
+        <div class="label">Cloud · <span class="nice">NONE</span></div>
+        <div class="value">All local — no Nabu Casa subscription</div>
+      </div>
+      <div class="spec">
+        <div class="label">Voice pipeline · <span class="must">REQUIRED</span></div>
+        <div class="value">Piper (TTS) + openWakeWord + local STT</div>
+      </div>
+    </div>
+
+    <div class="note warn" style="margin-top:16px"><span class="ico">📦</span><div><strong>Two halves to this build:</strong> configure the Home Assistant hub <em>first</em> (no tablet needed — do it before the trip), then set up the tablet (~10 min, APK only, no Play Store or Google account required).</div></div>
+
+    <div class="card" style="margin-top:16px">
+      <h3 style="font-size:1rem;margin-bottom:14px">🛠 Part A · On the Home Assistant hub</h3>
+      <p style="font-size:.82rem;color:var(--text-faint);margin-bottom:10px"><strong style="color:var(--text)">Do this before the trip</strong> — it needs no tablet.</p>
+      <ul class="nego">
+        <li><strong>Install the Wyoming add-ons:</strong> Settings → Add-ons → Add-on store → Piper (TTS), openWakeWord, and wyoming-onnx-asr (STT). On the Green's modest hardware, onnx-asr/Parakeet is noticeably lighter than faster-whisper.</li>
+        <li><strong>Build a local Assist pipeline:</strong> Settings → Voice assistants → Add assistant → pick local STT + Piper + openWakeWord. Everything stays on the LAN — no Nabu Casa subscription.</li>
+        <li><strong>Install HACS:</strong> Settings → Apps → add repository github.com/hacs/addons → install "Get HACS" → restart Home Assistant.</li>
+        <li><strong>Install Voice Satellite:</strong> HACS → Custom repositories → add jxlarrea/voice-satellite-card-integration → download → restart. (With Kiosk Satellite's built-in voice you can skip this — but installing it costs nothing and covers both setups.)</li>
+      </ul>
+      <ul class="checklist" style="margin-top:6px">
+        <li><label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer"><input type="checkbox" id="va1" data-persist><span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt"><strong>Wyoming add-ons installed</strong>Piper, openWakeWord, wyoming-onnx-asr</span></label></li>
+        <li><label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer"><input type="checkbox" id="va2" data-persist><span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt"><strong>Local Assist pipeline created</strong>STT + Piper + openWakeWord</span></label></li>
+        <li><label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer"><input type="checkbox" id="va3" data-persist><span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt"><strong>HACS + Voice Satellite installed</strong>Restarted Home Assistant</span></label></li>
+      </ul>
+    </div>
+
+    <div class="card" style="margin-top:12px">
+      <h3 style="font-size:1rem;margin-bottom:14px">📱 Part B · On the tablet</h3>
+      <p style="font-size:.82rem;color:var(--text-faint);margin-bottom:10px"><strong style="color:var(--text)">~10 minutes</strong> · APK only, no Play Store or Google account needed (works fine on Chinese ROMs)</p>
+      <ul class="nego">
+        <li><strong>Create a long-lived access token:</strong> HA → your profile → Security → Long-lived access tokens → copy it somewhere safe.</li>
+        <li><strong>Sideload Kiosk Satellite:</strong> download the APK from the project's GitHub releases page; allow "install from unknown sources" once when prompted.</li>
+        <li><strong>Run the setup wizard:</strong> enter your HA URL (http://homeassistant.local:8123) + the token → pick your dashboard → leave Voice Satellite enabled → choose wake word (e.g. "Okay Nabu") and the local pipeline.</li>
+        <li><strong>Confirm discovery:</strong> the tablet shows up under Settings → Devices &amp; services on the Green → assign it to a room/area.</li>
+        <li><strong>Enable the ESPHome connection</strong> in the app settings → screen, volume, motion, and battery become HA entities you can automate.</li>
+        <li><strong>Kill battery restrictions:</strong> Xiaomi/HyperOS → Settings → Apps → Kiosk Satellite → Battery saver → No restrictions. Otherwise Android will freeze the wake word overnight.</li>
+        <li><strong>Protect the battery:</strong> automation on the smart plug — OFF at 80%, ON at 20% (uses the battery sensor from the step above).</li>
+        <li><strong>Optional — remote admin UI:</strong> browse to http://&lt;tablet-ip&gt;:2324 from your laptop for fine-tuning without touching the wall mount.</li>
+      </ul>
+      <ul class="checklist" style="margin-top:6px">
+        <li><label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer"><input type="checkbox" id="vb1" data-persist><span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt"><strong>Long-lived access token created</strong></span></label></li>
+        <li><label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer"><input type="checkbox" id="vb2" data-persist><span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt"><strong>Kiosk Satellite sideloaded &amp; wizard completed</strong></span></label></li>
+        <li><label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer"><input type="checkbox" id="vb3" data-persist><span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt"><strong>Battery restrictions disabled</strong>No restrictions in HyperOS app settings</span></label></li>
+        <li><label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer"><input type="checkbox" id="vb4" data-persist><span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt"><strong>20–80% charge automation live</strong>Smart plug tied to the battery sensor</span></label></li>
+      </ul>
+    </div>
+
+    <div class="note ok" style="margin-top:16px"><span class="ico">🎙️</span><div><strong>Wake-word tip:</strong> if the kiosk misses you, check the mic permissions and "no restrictions" battery setting first — those two cause most reliability problems.</div></div>
+  </section>
+
+  <!-- VOICE DONE -->
+  <section id="voice-done" data-mode="build" data-project="voice">
+    <div class="section-head">
+      <span class="num">✓</span>
+      <h2>Voice Assistant Checklist</h2>
+    </div>
+    <p class="lead">The voice kiosk is done when all of these are true.</p>
+    <div class="card">
+      <ul class="checklist">
+        <li><label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer"><input type="checkbox" id="vd1" data-persist><span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt"><strong>Local Assist pipeline responds on the hub</strong></span></label></li>
+        <li><label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer"><input type="checkbox" id="vd2" data-persist><span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt"><strong>Tablet discovered in HA and assigned to an area</strong></span></label></li>
+        <li><label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer"><input type="checkbox" id="vd3" data-persist><span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt"><strong>Wake word triggers hands-free</strong>Screen, volume, motion, battery are HA entities</span></label></li>
+        <li><label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer"><input type="checkbox" id="vd4" data-persist><span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt"><strong>Battery health protected</strong>Charge cycle keeps it between 20–80%</span></label></li>
+        <li><label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer"><input type="checkbox" id="vd5" data-persist><span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt"><strong>Kiosk app survives overnight</strong>Wake word still responds after a night idle</span></label></li>
+      </ul>
+    </div>
+    <div class="card" style="margin-top:12px">
+      <h3 style="font-size:1rem;margin-bottom:10px">Maintenance</h3>
+      <div class="table-wrap" style="margin:0">
+        <table class="time">
+          <thead><tr><th>Task</th><th>Frequency</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td>Update add-ons (Piper, wake word, STT)</td><td>Monthly</td><td>HA → Settings → Add-ons → update</td></tr>
+            <tr><td>Update Kiosk Satellite APK</td><td>When released</td><td>sideload the new APK over the old one</td></tr>
+            <tr><td>Check the kiosk still wakes</td><td>Weekly</td><td>say the wake word near the tablet</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
 </main>
 
 <footer>
@@ -2500,6 +2749,16 @@ ls -li /mnt/media/tv/&lt;series&gt;/&lt;episode-file&gt;<span class="cmt">
     return (sec && sec.getAttribute('data-mode')) || 'buy';
   }
 
+  function projectOf(el) {
+    if (!el.closest) return '';
+    /* nearest project marker wins: an inner group (hw-card / ck-group /
+       checklist ul) can tag a subset inside a shared section */
+    var inner = el.closest('.hw-card[data-project], .ck-group[data-project], ul.checklist[data-project]');
+    if (inner) return inner.getAttribute('data-project');
+    var sec = el.closest('section');
+    return (sec && sec.getAttribute('data-project')) || '';
+  }
+
   persisted.forEach(function (cb) {
     if (state[cb.id]) cb.checked = true;
     cb.addEventListener('change', function () {
@@ -2514,9 +2773,14 @@ ls -li /mnt/media/tv/&lt;series&gt;/&lt;episode-file&gt;<span class="cmt">
   var progressText = document.getElementById('progressText');
   var CIRC = 2 * Math.PI * 18;
   var activeMode = state.__mode || 'buy';
+  var activeProject = state.__project || 'netflix';
 
   function updateProgress() {
-    var pool = persisted.filter(function (cb) { return modeOf(cb) === activeMode; });
+    var pool = persisted.filter(function (cb) {
+      if (modeOf(cb) !== activeMode) return false;
+      var proj = projectOf(cb);
+      return !proj || proj === activeProject;
+    });
     var total = pool.length;
     var done = pool.filter(function (cb) { return cb.checked; }).length;
     var pct = total ? done / total : 0;
@@ -2524,10 +2788,42 @@ ls -li /mnt/media/tv/&lt;series&gt;/&lt;episode-file&gt;<span class="cmt">
     progressText.textContent = done + '/' + total;
   }
 
-  /* ---------- Mode switching ---------- */
+  /* ---------- Mode + project switching ---------- */
   var modeBtns = Array.prototype.slice.call(document.querySelectorAll('#modes button'));
+  var projectBtns = Array.prototype.slice.call(document.querySelectorAll('#projects button'));
+  var projectsBar = document.getElementById('projects');
   var tabLinks = Array.prototype.slice.call(document.querySelectorAll('#tabs a'));
   var allSections = Array.prototype.slice.call(document.querySelectorAll('main > section[data-mode]'));
+  var innerProjectEls = Array.prototype.slice.call(
+    document.querySelectorAll('main > section .hw-card[data-project], main > section .ck-group[data-project], main > section ul.checklist[data-project]')
+  );
+
+  function applyVisibility() {
+    /* project filter applies in both buy and build modes;
+       sections/tabs without data-project are shared and always visible */
+    allSections.forEach(function (s) {
+      var okMode = s.getAttribute('data-mode') === activeMode;
+      var proj = s.getAttribute('data-project');
+      var okProj = !proj || proj === activeProject;
+      s.classList.toggle('mode-hidden', !(okMode && okProj));
+    });
+
+    /* project cards nested inside a shared section (e.g. #target) */
+    innerProjectEls.forEach(function (el) {
+      el.classList.toggle('project-hidden', el.getAttribute('data-project') !== activeProject);
+    });
+
+    tabLinks.forEach(function (a) {
+      var okMode = a.getAttribute('data-mode') === activeMode;
+      var proj = a.getAttribute('data-project');
+      var okProj = !proj || proj === activeProject;
+      a.classList.toggle('mode-hidden', !(okMode && okProj));
+    });
+
+    projectBtns.forEach(function (b) {
+      b.classList.toggle('active', b.getAttribute('data-project') === activeProject);
+    });
+  }
 
   function setMode(mode) {
     activeMode = mode;
@@ -2537,13 +2833,17 @@ ls -li /mnt/media/tv/&lt;series&gt;/&lt;episode-file&gt;<span class="cmt">
     modeBtns.forEach(function (b) {
       b.classList.toggle('active', b.getAttribute('data-mode') === mode);
     });
-    tabLinks.forEach(function (a) {
-      a.classList.toggle('mode-hidden', a.getAttribute('data-mode') !== mode);
-    });
-    allSections.forEach(function (s) {
-      s.classList.toggle('mode-hidden', s.getAttribute('data-mode') !== mode);
-    });
 
+    applyVisibility();
+    updateProgress();
+    if (typeof refreshSpy === 'function') refreshSpy();
+  }
+
+  function setProject(project) {
+    activeProject = project;
+    state.__project = project;
+    save();
+    applyVisibility();
     updateProgress();
     if (typeof refreshSpy === 'function') refreshSpy();
   }
@@ -2551,6 +2851,13 @@ ls -li /mnt/media/tv/&lt;series&gt;/&lt;episode-file&gt;<span class="cmt">
   modeBtns.forEach(function (b) {
     b.addEventListener('click', function () {
       setMode(b.getAttribute('data-mode'));
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+
+  projectBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      setProject(b.getAttribute('data-project'));
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   });
@@ -2766,8 +3073,10 @@ ls -li /mnt/media/tv/&lt;series&gt;/&lt;episode-file&gt;<span class="cmt">
   document.getElementById('resetBtn').addEventListener('click', function () {
     if (!confirm('Reset all checkboxes and progress?')) return;
     persisted.forEach(function (cb) { cb.checked = false; });
-    var keepMode = state.__mode;
-    state = keepMode ? { __mode: keepMode } : {};
+    var keep = {};
+    if (state.__mode) keep.__mode = state.__mode;
+    if (state.__project) keep.__project = state.__project;
+    state = keep;
     save();
     updateProgress();
     showToast('Progress reset');
