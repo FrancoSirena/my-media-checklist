@@ -1,0 +1,1660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0d1117">
+<meta name="description" content="Shenzhen Huaqiangbei mini PC shopping checklist — November 2026. Price anchors, verification commands, and a live budget calculator.">
+<title>Shenzhen PC Hunt · Huaqiangbei Checklist</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230d1117'/%3E%3Ctext x='50' y='68' font-size='52' text-anchor='middle' fill='%2358a6ff' font-family='monospace'%3E%E2%9C%93%3C/text%3E%3C/svg%3E">
+<style>
+  :root {
+    --bg: #0d1117;
+    --bg-2: #161b22;
+    --bg-3: #21262d;
+    --bg-4: #2d333b;
+    --border: #30363d;
+    --border-2: #3d444d;
+    --text: #e6edf3;
+    --text-dim: #8b949e;
+    --text-faint: #6e7681;
+    --accent: #58a6ff;
+    --accent-dim: #1f6feb;
+    --green: #3fb950;
+    --warn: #d29922;
+    --danger: #f85149;
+    --radius: 12px;
+    --radius-sm: 8px;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --shadow: 0 8px 24px rgba(0,0,0,.4);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; scroll-padding-top: 130px; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+    overflow-x: hidden;
+  }
+
+  /* ---------- Header ---------- */
+  .app-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(13,17,23,.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .header-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .brand h1 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .brand .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 8px var(--green);
+    animation: pulse 2.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .4; }
+  }
+
+  .brand p {
+    font-size: .78rem;
+    color: var(--text-dim);
+    margin-top: 1px;
+    letter-spacing: .02em;
+  }
+
+  .progress-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+
+  .ring { transform: rotate(-90deg); }
+
+  .ring circle {
+    fill: none;
+    stroke-width: 5;
+  }
+
+  .ring .bg { stroke: var(--bg-3); }
+  .ring .fg {
+    stroke: var(--green);
+    stroke-linecap: round;
+    transition: stroke-dashoffset .4s ease;
+  }
+
+  #progressText {
+    font-family: var(--mono);
+    font-size: .8rem;
+    color: var(--text-dim);
+    min-width: 46px;
+  }
+
+  /* ---------- Nav ---------- */
+  .tabs {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 12px 10px;
+    display: flex;
+    gap: 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+
+  .tabs a {
+    flex-shrink: 0;
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: .82rem;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 100px;
+    transition: background .15s, color .15s;
+    white-space: nowrap;
+  }
+
+  .tabs a:hover { color: var(--text); background: var(--bg-3); }
+  .tabs a.active { color: var(--accent); background: rgba(88,166,255,.12); }
+
+  /* ---------- Layout ---------- */
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 28px 20px 80px;
+  }
+
+  section { margin-bottom: 40px; scroll-margin-top: 130px; }
+
+  .section-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .section-head .num {
+    font-family: var(--mono);
+    font-size: .75rem;
+    color: var(--accent);
+    background: rgba(88,166,255,.1);
+    border: 1px solid rgba(88,166,255,.25);
+    padding: 3px 8px;
+    border-radius: 6px;
+    flex-shrink: 0;
+  }
+
+  h2 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .lead {
+    color: var(--text-dim);
+    font-size: .92rem;
+    margin-bottom: 18px;
+    max-width: 70ch;
+  }
+
+  .card {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+  }
+
+  .card + .card { margin-top: 12px; }
+
+  /* ---------- Target specs ---------- */
+  .spec-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+  }
+
+  .spec {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+  }
+
+  .spec .label {
+    font-size: .72rem;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--text-faint);
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+
+  .spec .value {
+    font-size: .95rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .spec .value.mono { font-family: var(--mono); font-size: .85rem; }
+
+  .must, .nice {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: .75rem;
+    padding: 2px 8px;
+    border-radius: 100px;
+    font-weight: 600;
+  }
+
+  .must { background: rgba(63,185,80,.12); color: var(--green); }
+  .nice { background: rgba(210,153,34,.12); color: var(--warn); }
+
+  /* ---------- Price table ---------- */
+  .table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--bg-2);
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .88rem;
+    min-width: 560px;
+  }
+
+  th {
+    text-align: left;
+    padding: 12px 14px;
+    font-size: .72rem;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--text-faint);
+    font-weight: 600;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-3);
+    position: sticky;
+    top: 0;
+  }
+
+  td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-dim);
+  }
+
+  tr:last-child td { border-bottom: none; }
+
+  tbody tr {
+    transition: background .12s;
+    cursor: pointer;
+  }
+
+  tbody tr:hover { background: var(--bg-3); }
+
+  tbody tr.selected {
+    background: rgba(88,166,255,.08);
+    box-shadow: inset 3px 0 0 var(--accent);
+  }
+
+  td.name { color: var(--text); font-weight: 500; }
+  td.price { font-family: var(--mono); color: var(--green); font-weight: 600; white-space: nowrap; }
+  td.price.bad { color: var(--danger); }
+
+  .badge {
+    display: inline-block;
+    font-size: .68rem;
+    padding: 2px 7px;
+    border-radius: 100px;
+    font-weight: 600;
+    letter-spacing: .02em;
+  }
+  .badge.best { background: rgba(63,185,80,.15); color: var(--green); }
+  .badge.perf { background: rgba(88,166,255,.15); color: var(--accent); }
+  .badge.risk { background: rgba(248,81,73,.15); color: var(--danger); }
+  .badge.safe { background: rgba(210,153,34,.15); color: var(--warn); }
+
+  /* ---------- Calculator ---------- */
+  .calc {
+    background: linear-gradient(160deg, var(--bg-2), var(--bg));
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+  }
+
+  .calc-model {
+    margin-bottom: 18px;
+  }
+
+  .calc-model label {
+    display: block;
+    font-size: .78rem;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--text-faint);
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  select {
+    width: 100%;
+    background: var(--bg-3);
+    color: var(--text);
+    border: 1px solid var(--border-2);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    font-size: .95rem;
+    font-family: var(--sans);
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238b949e' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+  }
+
+  select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+  .toggles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 22px;
+  }
+
+  .toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--bg-3);
+    border: 1px solid var(--border-2);
+    border-radius: 100px;
+    padding: 8px 14px;
+    font-size: .85rem;
+    cursor: pointer;
+    user-select: none;
+    transition: border-color .15s, background .15s;
+  }
+
+  .toggle:hover { border-color: var(--accent); }
+  .toggle input { display: none; }
+
+  .toggle .box {
+    width: 16px; height: 16px;
+    border: 1.5px solid var(--border-2);
+    border-radius: 4px;
+    display: grid;
+    place-items: center;
+    transition: all .15s;
+    flex-shrink: 0;
+  }
+
+  .toggle input:checked + .box {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .toggle .box svg {
+    width: 10px; height: 10px;
+    opacity: 0;
+    transition: opacity .15s;
+  }
+
+  .toggle input:checked + .box svg { opacity: 1; }
+
+  .toggle .cost {
+    font-family: var(--mono);
+    font-size: .78rem;
+    color: var(--text-faint);
+  }
+
+  .calc-out {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+  }
+
+  .calc-out .box {
+    background: var(--bg-3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+  }
+
+  .calc-out .box.highlight {
+    background: rgba(63,185,80,.08);
+    border-color: rgba(63,185,80,.3);
+  }
+
+  .calc-out .lbl {
+    font-size: .72rem;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--text-faint);
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .calc-out .val {
+    font-family: var(--mono);
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .calc-out .box.highlight .val { color: var(--green); }
+
+  /* ---------- Verification ---------- */
+  .cmd {
+    background: #010409;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    margin-bottom: 10px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .cmd-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    background: var(--bg-3);
+    border-bottom: 1px solid var(--border);
+    gap: 10px;
+  }
+
+  .cmd-title {
+    font-size: .82rem;
+    font-weight: 600;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .cmd-title .n {
+    font-family: var(--mono);
+    font-size: .7rem;
+    color: var(--accent);
+    background: rgba(88,166,255,.1);
+    padding: 1px 6px;
+    border-radius: 4px;
+  }
+
+  .copy-btn {
+    background: var(--bg-4);
+    border: 1px solid var(--border-2);
+    color: var(--text-dim);
+    font-size: .72rem;
+    font-family: var(--sans);
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all .15s;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .copy-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .copy-btn.copied { background: var(--green); color: #fff; border-color: var(--green); }
+
+  .cmd pre {
+    padding: 14px;
+    font-family: var(--mono);
+    font-size: .82rem;
+    line-height: 1.65;
+    color: #c9d1d9;
+    overflow-x: auto;
+    white-space: pre;
+  }
+
+  .cmd pre .cmt { color: var(--text-faint); }
+  .cmd pre .exp { color: var(--green); }
+
+  .cmd-verify {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    background: var(--bg-2);
+    border-top: 1px solid var(--border);
+    font-size: .8rem;
+    color: var(--text-dim);
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .cmd-verify input { display: none; }
+
+  .cmd-verify .box {
+    width: 16px; height: 16px;
+    border: 1.5px solid var(--border-2);
+    border-radius: 4px;
+    display: grid;
+    place-items: center;
+    transition: all .15s;
+    flex-shrink: 0;
+  }
+
+  .cmd-verify input:checked + .box {
+    background: var(--green);
+    border-color: var(--green);
+  }
+
+  .cmd-verify input:checked + .box svg { opacity: 1; }
+  .cmd-verify .box svg { width: 10px; height: 10px; opacity: 0; }
+  .cmd-verify input:checked ~ .txt { color: var(--green); }
+
+  .redflags {
+    background: rgba(248,81,73,.06);
+    border: 1px solid rgba(248,81,73,.25);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    margin-top: 16px;
+  }
+
+  .redflags h3 {
+    font-size: .95rem;
+    color: var(--danger);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .redflags ul { list-style: none; }
+
+  .redflags li {
+    font-size: .88rem;
+    color: var(--text-dim);
+    padding: 5px 0 5px 22px;
+    position: relative;
+  }
+
+  .redflags li::before {
+    content: "✕";
+    position: absolute;
+    left: 0;
+    color: var(--danger);
+    font-weight: 700;
+  }
+
+  /* ---------- Cards grid ---------- */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 12px;
+  }
+
+  .place {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    transition: border-color .15s, transform .15s;
+  }
+
+  .place:hover { border-color: var(--border-2); transform: translateY(-2px); }
+
+  .place h4 {
+    font-size: .95rem;
+    margin-bottom: 4px;
+    color: var(--text);
+  }
+
+  .place .role {
+    font-size: .75rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .place p { font-size: .85rem; color: var(--text-dim); }
+
+  /* ---------- Negotiation ---------- */
+  .nego li {
+    list-style: none;
+    padding: 12px 0 12px 30px;
+    position: relative;
+    font-size: .9rem;
+    color: var(--text-dim);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nego li:last-child { border-bottom: none; }
+
+  .nego li::before {
+    content: "→";
+    position: absolute;
+    left: 4px;
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .nego li strong { color: var(--text); }
+
+  /* ---------- Decision tree ---------- */
+  .dt-q {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 14px;
+  }
+
+  .dt-opts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+  }
+
+  .dt-opt {
+    background: var(--bg-3);
+    border: 1px solid var(--border-2);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: .88rem;
+    font-weight: 500;
+    padding: 14px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    text-align: left;
+    transition: all .15s;
+  }
+
+  .dt-opt:hover {
+    border-color: var(--accent);
+    background: rgba(88,166,255,.08);
+  }
+
+  .dt-opt.active {
+    border-color: var(--accent);
+    background: rgba(88,166,255,.12);
+    box-shadow: 0 0 0 1px var(--accent);
+  }
+
+  .dt-result {
+    margin-top: 18px;
+    padding: 18px;
+    background: linear-gradient(160deg, rgba(63,185,80,.08), transparent);
+    border: 1px solid rgba(63,185,80,.3);
+    border-radius: var(--radius);
+    display: none;
+    animation: fadeIn .3s ease;
+  }
+
+  .dt-result.show { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .dt-result h4 {
+    font-size: 1.05rem;
+    color: var(--green);
+    margin-bottom: 6px;
+  }
+
+  .dt-result .price-tag {
+    font-family: var(--mono);
+    font-size: .95rem;
+    color: var(--text);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .dt-result p {
+    font-size: .88rem;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+  }
+
+  .dt-result .why {
+    font-size: .82rem;
+    color: var(--text-faint);
+    font-style: italic;
+    margin-top: 8px;
+  }
+
+  /* ---------- Checklist ---------- */
+  .checklist { list-style: none; }
+
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: opacity .15s;
+  }
+
+  .checklist li:last-child { border-bottom: none; }
+
+  .checklist input { display: none; }
+
+  .checklist .box {
+    width: 20px; height: 20px;
+    border: 2px solid var(--border-2);
+    border-radius: 6px;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+    transition: all .15s;
+  }
+
+  .checklist input:checked + .box {
+    background: var(--green);
+    border-color: var(--green);
+  }
+
+  .checklist .box svg {
+    width: 12px; height: 12px;
+    opacity: 0;
+    transition: opacity .15s;
+  }
+
+  .checklist input:checked + .box svg { opacity: 1; }
+
+  .checklist .txt {
+    font-size: .92rem;
+    color: var(--text-dim);
+    transition: color .15s;
+  }
+
+  .checklist input:checked ~ .txt {
+    color: var(--text-faint);
+    text-decoration: line-through;
+  }
+
+  .checklist .txt strong { color: var(--text); display: block; font-weight: 600; }
+  .checklist input:checked ~ .txt strong { color: var(--text-faint); }
+
+  .reset-btn {
+    background: transparent;
+    border: 1px solid var(--border-2);
+    color: var(--text-dim);
+    font-family: var(--sans);
+    font-size: .8rem;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 16px;
+    transition: all .15s;
+  }
+
+  .reset-btn:hover { border-color: var(--danger); color: var(--danger); }
+
+  /* ---------- Emergency / footer ---------- */
+  .emergency {
+    background: rgba(210,153,34,.06);
+    border: 1px solid rgba(210,153,34,.25);
+    border-radius: var(--radius);
+    padding: 20px;
+  }
+
+  .emergency h3 {
+    color: var(--warn);
+    font-size: .95rem;
+    margin-bottom: 12px;
+  }
+
+  .emergency li {
+    list-style: none;
+    font-size: .88rem;
+    color: var(--text-dim);
+    padding: 6px 0 6px 22px;
+    position: relative;
+  }
+
+  .emergency li::before {
+    content: "!";
+    position: absolute;
+    left: 4px;
+    color: var(--warn);
+    font-weight: 700;
+  }
+
+  footer {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-faint);
+    font-size: .82rem;
+    border-top: 1px solid var(--border);
+  }
+
+  footer .oneliner {
+    max-width: 640px;
+    margin: 0 auto 12px;
+    color: var(--text-dim);
+    font-size: .9rem;
+    line-height: 1.6;
+  }
+
+  /* ---------- Toast ---------- */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--bg-3);
+    border: 1px solid var(--green);
+    color: var(--text);
+    padding: 12px 20px;
+    border-radius: 100px;
+    font-size: .88rem;
+    font-weight: 500;
+    box-shadow: var(--shadow);
+    z-index: 200;
+    opacity: 0;
+    transition: all .3s cubic-bezier(.34,1.56,.64,1);
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    max-width: calc(100vw - 40px);
+  }
+
+  .toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+
+  .toast svg { width: 16px; height: 16px; color: var(--green); flex-shrink: 0; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 640px) {
+    main { padding: 20px 14px 60px; }
+    .header-inner { padding: 12px 14px; }
+    .brand h1 { font-size: 1rem; }
+    h2 { font-size: 1.15rem; }
+    .calc { padding: 18px; }
+    .calc-out { grid-template-columns: 1fr; }
+    .calc-out .val { font-size: 1.2rem; }
+    .card { padding: 16px; }
+    .dt-opts { grid-template-columns: 1fr; }
+  }
+
+  /* ---------- Print ---------- */
+  @media print {
+    .app-header, .tabs, .copy-btn, .reset-btn, .toast { display: none !important; }
+    body { background: #fff; color: #000; }
+    .card, .cmd, .place, .calc, .dt-result { background: #fff; border-color: #ccc; }
+    .cmd pre { background: #f5f5f5; color: #000; }
+    section { page-break-inside: avoid; }
+  }
+
+  /* ---------- Reduced motion ---------- */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: .01ms !important;
+      transition-duration: .01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <div class="header-inner">
+    <div class="brand">
+      <h1><span class="dot"></span>Shenzhen PC Hunt</h1>
+      <p>Huaqiangbei · November 2026</p>
+    </div>
+    <div class="progress-wrap">
+      <svg class="ring" width="44" height="44" viewBox="0 0 44 44">
+        <circle class="bg" cx="22" cy="22" r="18"></circle>
+        <circle class="fg" id="ringFg" cx="22" cy="22" r="18"
+                stroke-dasharray="113.1" stroke-dashoffset="113.1"></circle>
+      </svg>
+      <span id="progressText">0/0</span>
+    </div>
+  </div>
+  <nav class="tabs" id="tabs">
+    <a href="#target">Target</a>
+    <a href="#prices">Prices</a>
+    <a href="#calc">Calculator</a>
+    <a href="#verify">Verify</a>
+    <a href="#where">Where</a>
+    <a href="#negotiate">Negotiate</a>
+    <a href="#decision">Decide</a>
+    <a href="#checklist">Checklist</a>
+    <a href="#emergency">Emergency</a>
+  </nav>
+</header>
+
+<main>
+
+  <!-- TARGET -->
+  <section id="target">
+    <div class="section-head">
+      <span class="num">01</span>
+      <h2>What I'm Buying</h2>
+    </div>
+    <p class="lead">A mini PC that runs the full Docker media stack — Jellyfin, Sonarr, Radarr, Prowlarr, Overseerr, qBittorrent, Gluetun, Tailscale — with hardware transcoding for remote streaming.</p>
+
+    <div class="spec-grid">
+      <div class="spec">
+        <div class="label">CPU · <span class="must">MUST</span></div>
+        <div class="value">Intel N100 / N150 <span style="color:var(--text-faint)">or</span> AMD Ryzen 7 5700U</div>
+      </div>
+      <div class="spec">
+        <div class="label">Transcoding · <span class="must">MUST</span></div>
+        <div class="value">Intel Quick Sync or AMD Vega iGPU</div>
+      </div>
+      <div class="spec">
+        <div class="label">RAM · <span class="must">MUST</span></div>
+        <div class="value mono">16GB min (or upgradable SO-DIMM)</div>
+      </div>
+      <div class="spec">
+        <div class="label">OS Drive · <span class="must">MUST</span></div>
+        <div class="value mono">256GB+ SSD</div>
+      </div>
+      <div class="spec">
+        <div class="label">Network · <span class="must">MUST</span></div>
+        <div class="value">1× Ethernet (2.5G preferred)</div>
+      </div>
+      <div class="spec">
+        <div class="label">Wi-Fi 6 · <span class="nice">NICE</span></div>
+        <div class="value">Backup if Ethernet unavailable</div>
+      </div>
+      <div class="spec">
+        <div class="label">Dual LAN · <span class="nice">NICE</span></div>
+        <div class="value">2.5G dual ports</div>
+      </div>
+      <div class="spec">
+        <div class="label">Fanless · <span class="nice">NICE</span></div>
+        <div class="value">Silent operation</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICES -->
+  <section id="prices">
+    <div class="section-head">
+      <span class="num">02</span>
+      <h2>Price Anchors</h2>
+    </div>
+    <p class="lead">Use these to negotiate. Tap any row to load it into the calculator below.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Model / Spec</th>
+            <th>Reference</th>
+            <th>EUR</th>
+            <th>Tag</th>
+          </tr>
+        </thead>
+        <tbody id="priceTable">
+          <tr data-model="g3">
+            <td class="name">GMKtec G3 · N100, 8GB, 256GB</td>
+            <td>AliExpress</td>
+            <td class="price">€112</td>
+            <td><span class="badge best">CHEAPEST</span></td>
+          </tr>
+          <tr data-model="g2">
+            <td class="name">GMKtec G2 · N100, 12GB, 512GB</td>
+            <td>ZOL ¥1,088</td>
+            <td class="price">€140</td>
+            <td><span class="badge best">BEST VALUE</span></td>
+          </tr>
+          <tr data-model="g2tb">
+            <td class="name">GMKtec G2 · N100, 12GB, 1TB</td>
+            <td>ZOL ¥1,288</td>
+            <td class="price">€165</td>
+            <td><span class="badge best">VALUE+</span></td>
+          </tr>
+          <tr data-model="eq13">
+            <td class="name">Beelink EQ13 · N100, 16GB, 500GB</td>
+            <td>Local dealer</td>
+            <td class="price">€175</td>
+            <td><span class="badge safe">QUALITY</span></td>
+          </tr>
+          <tr data-model="r7_16">
+            <td class="name">Ryzen 7 5700U · 16GB, 256GB</td>
+            <td>Xianyu ¥1,600</td>
+            <td class="price">€200</td>
+            <td><span class="badge perf">8C/16T</span></td>
+          </tr>
+          <tr data-model="r7_32">
+            <td class="name">Ryzen 7 5700U · 32GB, 256GB</td>
+            <td>Xianyu ¥1,950</td>
+            <td class="price">€245</td>
+            <td><span class="badge perf">OVERKILL</span></td>
+          </tr>
+          <tr data-model="me_mini">
+            <td class="name">Beelink ME mini · N150, 12GB, 6× M.2</td>
+            <td>$269–329</td>
+            <td class="price">€275</td>
+            <td><span class="badge safe">NAS</span></td>
+          </tr>
+          <tr data-model="noname">
+            <td class="name">No-name N100 · 16GB, 512GB</td>
+            <td>Huaqiangbei</td>
+            <td class="price">€95</td>
+            <td><span class="badge risk">RISK</span></td>
+          </tr>
+          <tr data-model="asus">
+            <td class="name">ASUS PN42 build (baseline)</td>
+            <td>NL retail</td>
+            <td class="price bad">€400</td>
+            <td><span class="badge risk">BASELINE</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- CALCULATOR -->
+  <section id="calc">
+    <div class="section-head">
+      <span class="num">03</span>
+      <h2>Budget Calculator</h2>
+    </div>
+    <p class="lead">Pick a model, toggle add-ons, see your first-year total and savings vs. the ASUS PN42 build.</p>
+
+    <div class="calc">
+      <div class="calc-model">
+        <label for="modelSelect">Mini PC</label>
+        <select id="modelSelect">
+          <option value="g3|112|GMKtec G3 (N100, 8/256)">GMKtec G3 · €112</option>
+          <option value="g2|140|GMKtec G2 (N100, 12/512)" selected>GMKtec G2 · €140</option>
+          <option value="g2tb|165|GMKtec G2 (N100, 12/1TB)">GMKtec G2 1TB · €165</option>
+          <option value="eq13|175|Beelink EQ13 (N100, 16/500)">Beelink EQ13 · €175</option>
+          <option value="r7_16|200|Ryzen 7 5700U (16/256)">Ryzen 7 5700U 16GB · €200</option>
+          <option value="r7_32|245|Ryzen 7 5700U (32/256)">Ryzen 7 5700U 32GB · €245</option>
+          <option value="me_mini|275|Beelink ME mini (N150, 6× M.2)">Beelink ME mini · €275</option>
+          <option value="noname|95|No-name N100 (16/512)">No-name N100 · €95</option>
+          <option value="asus|400|ASUS PN42 build (baseline)">ASUS PN42 baseline · €400</option>
+        </select>
+      </div>
+
+      <div class="toggles">
+        <label class="toggle">
+          <input type="checkbox" id="addHdd" checked>
+          <span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span>4TB USB HDD</span>
+          <span class="cost">+€107.49</span>
+        </label>
+        <label class="toggle">
+          <input type="checkbox" id="addVpn" checked>
+          <span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span>ProtonVPN (1st yr)</span>
+          <span class="cost">+€60</span>
+        </label>
+      </div>
+
+      <div class="calc-out">
+        <div class="box">
+          <div class="lbl">Your Total</div>
+          <div class="val" id="calcTotal">€307</div>
+        </div>
+        <div class="box highlight">
+          <div class="lbl">Savings vs ASUS</div>
+          <div class="val" id="calcSavings">€260</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VERIFY -->
+  <section id="verify">
+    <div class="section-head">
+      <span class="num">04</span>
+      <h2>Verification Commands</h2>
+    </div>
+    <p class="lead">Boot a Ubuntu Server 24.04 USB stick on the machine before paying. Run each command, tick it off, and compare against the expected output. <strong style="color:var(--danger)">If the vendor won't let you test, walk away.</strong></p>
+
+    <div class="cmd">
+      <div class="cmd-head">
+        <div class="cmd-title"><span class="n">1</span> CPU — confirm the chip</div>
+        <button class="copy-btn" data-copy="lscpu | grep &quot;Model name&quot;">Copy</button>
+      </div>
+      <pre>lscpu | grep "Model name"
+<span class="cmt"># Expected: Intel(R) N100 / N150  —or—  AMD Ryzen 7 5700U</span></pre>
+      <label class="cmd-verify">
+        <input type="checkbox" id="v1" data-persist>
+        <span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="txt">Verified — CPU matches the listing</span>
+      </label>
+    </div>
+
+    <div class="cmd">
+      <div class="cmd-head">
+        <div class="cmd-title"><span class="n">2</span> RAM — capacity &amp; speed</div>
+        <button class="copy-btn" data-copy="free -h &amp;&amp; sudo dmidecode -t memory | grep -E &quot;Size|Speed|Type&quot;">Copy</button>
+      </div>
+      <pre>free -h
+sudo dmidecode -t memory | grep -E "Size|Speed|Type"
+<span class="cmt"># Expected: 8/12/16GB, DDR4-3200 or DDR5-4800</span>
+<span class="cmt"># Watch for: soldered RAM (no SO-DIMM slot = no upgrade)</span></pre>
+      <label class="cmd-verify">
+        <input type="checkbox" id="v2" data-persist>
+        <span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="txt">Verified — RAM matches, SO-DIMM slot present (or soldered 16GB)</span>
+      </label>
+    </div>
+
+    <div class="cmd">
+      <div class="cmd-head">
+        <div class="cmd-title"><span class="n">3</span> Storage — capacity &amp; brand</div>
+        <button class="copy-btn" data-copy="lsblk -o NAME,SIZE,TYPE,MOUNTPOINT">Copy</button>
+      </div>
+      <pre>lsblk -o NAME,SIZE,TYPE,MOUNTPOINT
+<span class="cmt"># Expected: advertised capacity</span>
+<span class="cmt"># Note: is it Samsung / WD / Kingston, or a no-name SSD?</span></pre>
+      <label class="cmd-verify">
+        <input type="checkbox" id="v3" data-persist>
+        <span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="txt">Verified — SSD capacity correct, branded drive</span>
+      </label>
+    </div>
+
+    <div class="cmd">
+      <div class="cmd-head">
+        <div class="cmd-title"><span class="n">4</span> GPU — transcoding support</div>
+        <button class="copy-btn" data-copy="lspci | grep -i vga">Copy</button>
+      </div>
+      <pre>lspci | grep -i vga
+<span class="cmt"># Intel: Alder Lake-N [UHD Graphics]</span>
+<span class="cmt"># AMD:   Radeon Vega 8</span></pre>
+      <label class="cmd-verify">
+        <input type="checkbox" id="v4" data-persist>
+        <span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="txt">Verified — GPU present, supports hardware transcoding</span>
+      </label>
+    </div>
+
+    <div class="cmd">
+      <div class="cmd-head">
+        <div class="cmd-title"><span class="n">5</span> Network — Ethernet ports</div>
+        <button class="copy-btn" data-copy="ip link show">Copy</button>
+      </div>
+      <pre>ip link show
+<span class="cmt"># Expected: at least one eth0, ideally 2.5G</span>
+<span class="cmt"># Red flag: Wi-Fi only, no Ethernet</span></pre>
+      <label class="cmd-verify">
+        <input type="checkbox" id="v5" data-persist>
+        <span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="txt">Verified — Ethernet port present (2.5G preferred)</span>
+      </label>
+    </div>
+
+    <div class="cmd">
+      <div class="cmd-head">
+        <div class="cmd-title"><span class="n">6</span> BIOS — Secure Boot toggle</div>
+        <button class="copy-btn" data-copy="sudo mokutil --sb-state">Copy</button>
+      </div>
+      <pre>sudo mokutil --sb-state
+<span class="cmt"># Or: reboot, press DEL / F2, check Secure Boot is toggleable</span>
+<span class="cmt"># Required for Ubuntu Server on some OEM boards</span></pre>
+      <label class="cmd-verify">
+        <input type="checkbox" id="v6" data-persist>
+        <span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="txt">Verified — BIOS accessible, Secure Boot can be disabled</span>
+      </label>
+    </div>
+
+    <div class="redflags">
+      <h3>🚩 Red flags — walk away if any of these are true</h3>
+      <ul>
+        <li>Specs don't match <code style="font-family:var(--mono);color:var(--text)">lscpu</code> or <code style="font-family:var(--mono);color:var(--text)">free -h</code> output</li>
+        <li>No-name SSD with no brand marking on the label</li>
+        <li>Soldered RAM with no SO-DIMM slot (can't upgrade later)</li>
+        <li>Wi-Fi only, no Ethernet port at all</li>
+        <li>BIOS locked — can't disable Secure Boot</li>
+        <li>Vendor refuses to let you boot a USB stick</li>
+        <li>Price for a branded 16/512 box exceeds €180</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- WHERE -->
+  <section id="where">
+    <div class="section-head">
+      <span class="num">05</span>
+      <h2>Where to Go</h2>
+    </div>
+    <p class="lead">Shenzhen's mini PC sector is concentrated in Huaqiangbei. Here's how the venues compare.</p>
+
+    <div class="grid">
+      <div class="place">
+        <div class="role">Best for no-name &amp; used</div>
+        <h4>Huaqiangbei 华强北</h4>
+        <p>SEG Market, Huaqiang Electronics World. Hundreds of stalls, overwhelming. Haggling expected. Best prices, highest risk.</p>
+      </div>
+      <div class="place">
+        <div class="role">Best for warranty</div>
+        <h4>Brand dealers</h4>
+        <p>Beelink and GMKtec showrooms. Official pricing, international warranty, less haggling. Safer but slightly pricier.</p>
+      </div>
+      <div class="place">
+        <div class="role">Best for used Ryzen</div>
+        <h4>Xianyu 闲鱼</h4>
+        <p>China's second-hand marketplace. Batches of ex-corporate Ryzen 7 5700U mini PCs appear and sell out within hours. Check daily.</p>
+      </div>
+      <div class="place">
+        <div class="role">Research only</div>
+        <h4>顺电 / Suning</h4>
+        <p>Retail electronics chains in Huaqiangbei. Good for hands-on testing, but you'll pay retail prices. Use for recon, not buying.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEGOTIATE -->
+  <section id="negotiate">
+    <div class="section-head">
+      <span class="num">06</span>
+      <h2>Negotiation Cheat Sheet</h2>
+    </div>
+    <div class="card">
+      <ul class="nego">
+        <li><strong>Start at 80% of listed price.</strong> Huaqiangbei vendors expect haggling — the first price is never the real price.</li>
+        <li><strong>Anchor with ZOL prices.</strong> Say "GMKtec G2 is ¥1,088 on ZOL" — this sets the floor and shows you've done homework.</li>
+        <li><strong>Bundle RAM + SSD + barebone</strong> for a discount if you go the barebone route. Vendors often have margin to move on bundles.</li>
+        <li><strong>Walk away if the price doesn't move.</strong> There are 50 more stalls selling the same thing within 100 meters.</li>
+        <li><strong>Cash (RMB) gets better prices</strong> than WeChat Pay at some stalls. Bring both, and don't show your full wallet.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- DECISION -->
+  <section id="decision">
+    <div class="section-head">
+      <span class="num">07</span>
+      <h2>Decision Tree</h2>
+    </div>
+    <p class="lead">Pick what matters most. I'll tell you which model to hunt for.</p>
+
+    <div class="card">
+      <div class="dt-q">What's your priority?</div>
+      <div class="dt-opts" id="dtOpts">
+        <button class="dt-opt" data-key="cheap">Cheapest possible</button>
+        <button class="dt-opt" data-key="value">Best value</button>
+        <button class="dt-opt" data-key="quality">Build quality + warranty</button>
+        <button class="dt-opt" data-key="perf">Max performance</button>
+        <button class="dt-opt" data-key="internal">No external drive</button>
+      </div>
+      <div class="dt-result" id="dtResult"></div>
+    </div>
+  </section>
+
+  <!-- CHECKLIST -->
+  <section id="checklist">
+    <div class="section-head">
+      <span class="num">08</span>
+      <h2>Pre-Purchase Checklist</h2>
+    </div>
+    <p class="lead">Tick these off before you leave the hotel. Your progress is saved automatically.</p>
+
+    <div class="card">
+      <ul class="checklist">
+        <li>
+          <label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer">
+            <input type="checkbox" id="c1" data-persist>
+            <span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="txt"><strong>Ubuntu Server 24.04 USB stick prepared</strong>Tested boot on another machine</span>
+          </label>
+        </li>
+        <li>
+          <label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer">
+            <input type="checkbox" id="c2" data-persist>
+            <span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="txt"><strong>EU plug adapter in bag</strong>Chinese PSUs often ship with Type I plugs</span>
+          </label>
+        </li>
+        <li>
+          <label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer">
+            <input type="checkbox" id="c3" data-persist>
+            <span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="txt"><strong>WeChat Pay / Alipay set up</strong>Most stalls prefer these over foreign cards</span>
+          </label>
+        </li>
+        <li>
+          <label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer">
+            <input type="checkbox" id="c4" data-persist>
+            <span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="txt"><strong>RMB cash backup (¥2,000–3,000)</strong>Cash sometimes gets better prices than digital payment</span>
+          </label>
+        </li>
+        <li>
+          <label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer">
+            <input type="checkbox" id="c5" data-persist>
+            <span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="txt"><strong>ZOL price screenshots saved</strong>GMKtec G2 ¥1,088 — your negotiation anchor</span>
+          </label>
+        </li>
+        <li>
+          <label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer">
+            <input type="checkbox" id="c6" data-persist>
+            <span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="txt"><strong>Xianyu listings screenshots saved</strong>Ryzen 7 5700U at ¥1,400–1,950</span>
+          </label>
+        </li>
+        <li>
+          <label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer">
+            <input type="checkbox" id="c7" data-persist>
+            <span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="txt"><strong>Phone charged (for verification commands)</strong>Bring a power bank</span>
+          </label>
+        </li>
+        <li>
+          <label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer">
+            <input type="checkbox" id="c8" data-persist>
+            <span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="txt"><strong>This checklist saved offline</strong>Bookmark it, or print it</span>
+          </label>
+        </li>
+      </ul>
+      <button class="reset-btn" id="resetBtn">Reset all progress</button>
+    </div>
+  </section>
+
+  <!-- EMERGENCY -->
+  <section id="emergency">
+    <div class="section-head">
+      <span class="num">09</span>
+      <h2>Emergency Info</h2>
+    </div>
+    <div class="emergency">
+      <h3>If something goes wrong</h3>
+      <ul>
+        <li><strong>Bought a bad unit?</strong> Return to the stall immediately. Most vendors exchange within 24 hours if you're polite but firm.</li>
+        <li><strong>No warranty?</strong> Accept the risk. No-name boxes are a gamble — that's why they're cheap.</li>
+        <li><strong>Need directions?</strong> Ask your hotel concierge for Huaqiangbei 华强北 — it's a well-known metro stop (Line 2/7).</li>
+        <li><strong>After you buy:</strong> boot Ubuntu Server, verify specs one more time, run <code style="font-family:var(--mono)">docker run hello-world</code>. If it works, you're done.</li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p class="oneliner">Buy a GMKtec G2 (N100, 12GB, 512GB) for ~€140 in Shenzhen, pair it with a 4TB WD My Passport from Beslist.nl (€107.49), and you've saved €235–€282 versus the ASUS PN42 build — with the same Docker stack and the same wireless TV streaming.</p>
+  <p>Shenzhen PC Hunt · November 2026 · Works offline · State saved locally</p>
+</footer>
+
+<div class="toast" id="toast">
+  <svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <span id="toastMsg">Copied</span>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- Storage ---------- */
+  var STORE = 'sz-checklist-v1';
+  var state = {};
+  try { state = JSON.parse(localStorage.getItem(STORE) || '{}') || {}; } catch (e) { state = {}; }
+
+  function save() {
+    try { localStorage.setItem(STORE, JSON.stringify(state)); } catch (e) {}
+  }
+
+  /* ---------- Persisted checkboxes ---------- */
+  var persisted = Array.prototype.slice.call(
+    document.querySelectorAll('input[type="checkbox"][data-persist]')
+  );
+
+  persisted.forEach(function (cb) {
+    if (state[cb.id]) cb.checked = true;
+    cb.addEventListener('change', function () {
+      state[cb.id] = cb.checked;
+      save();
+      updateProgress();
+    });
+  });
+
+  /* ---------- Progress ring ---------- */
+  var ringFg = document.getElementById('ringFg');
+  var progressText = document.getElementById('progressText');
+  var CIRC = 2 * Math.PI * 18;
+
+  function updateProgress() {
+    var total = persisted.length;
+    var done = persisted.filter(function (cb) { return cb.checked; }).length;
+    var pct = total ? done / total : 0;
+    ringFg.style.strokeDashoffset = String(CIRC * (1 - pct));
+    progressText.textContent = done + '/' + total;
+  }
+  updateProgress();
+
+  /* ---------- Copy buttons ---------- */
+  var toast = document.getElementById('toast');
+  var toastMsg = document.getElementById('toastMsg');
+  var toastTimer = null;
+
+  function showToast(msg) {
+    toastMsg.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toast.classList.remove('show'); }, 1800);
+  }
+
+  function copyText(text, btn) {
+    var done = function () {
+      if (btn) {
+        btn.classList.add('copied');
+        btn.textContent = 'Copied';
+        setTimeout(function () {
+          btn.classList.remove('copied');
+          btn.textContent = 'Copy';
+        }, 1400);
+      }
+      showToast('Copied to clipboard');
+    };
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { fallback(text, done); });
+    } else {
+      fallback(text, done);
+    }
+  }
+
+  function fallback(text, done) {
+    try {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.position = 'absolute';
+      ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      done();
+    } catch (e) {
+      showToast('Copy failed — select manually');
+    }
+  }
+
+  document.querySelectorAll('.copy-btn').forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      copyText(btn.getAttribute('data-copy'), btn);
+    });
+  });
+
+  /* ---------- Calculator ---------- */
+  var HDD = 107.49;
+  var VPN = 60;
+  var ASUS_BASE = 400; /* ASUS mini PC portion only; HDD & VPN added if toggled */
+
+  var modelSelect = document.getElementById('modelSelect');
+  var addHdd = document.getElementById('addHdd');
+  var addVpn = document.getElementById('addVpn');
+  var calcTotal = document.getElementById('calcTotal');
+  var calcSavings = document.getElementById('calcSavings');
+
+  function fmt(n) {
+    return '€' + Math.round(n).toLocaleString('en-US');
+  }
+
+  function recompute() {
+    var parts = modelSelect.value.split('|');
+    var price = parseFloat(parts[1]);
+
+    var hdd = addHdd.checked ? HDD : 0;
+    var vpn = addVpn.checked ? VPN : 0;
+
+    var total = price + hdd + vpn;
+    var asusEquivalent = ASUS_BASE + hdd + vpn;
+    var savings = asusEquivalent - total;
+
+    calcTotal.textContent = fmt(total);
+
+    if (savings > 0) {
+      calcSavings.textContent = fmt(savings) + ' saved';
+      calcSavings.style.color = 'var(--green)';
+    } else if (savings < 0) {
+      calcSavings.textContent = fmt(Math.abs(savings)) + ' more';
+      calcSavings.style.color = 'var(--danger)';
+    } else {
+      calcSavings.textContent = 'Same';
+      calcSavings.style.color = 'var(--text)';
+    }
+  }
+
+  modelSelect.addEventListener('change', function () {
+    syncTableSelection();
+    recompute();
+  });
+  addHdd.addEventListener('change', recompute);
+  addVpn.addEventListener('change', recompute);
+  recompute();
+
+  /* ---------- Price table → calculator ---------- */
+  var MODEL_MAP = {
+    g3: 'g3|112|GMKtec G3 (N100, 8/256)',
+    g2: 'g2|140|GMKtec G2 (N100, 12/512)',
+    g2tb: 'g2tb|165|GMKtec G2 (N100, 12/1TB)',
+    eq13: 'eq13|175|Beelink EQ13 (N100, 16/500)',
+    r7_16: 'r7_16|200|Ryzen 7 5700U (16/256)',
+    r7_32: 'r7_32|245|Ryzen 7 5700U (32/256)',
+    me_mini: 'me_mini|275|Beelink ME mini (N150, 6× M.2)',
+    noname: 'noname|95|No-name N100 (16/512)',
+    asus: 'asus|400|ASUS PN42 build (baseline)'
+  };
+
+  function syncTableSelection() {
+    var key = modelSelect.value.split('|')[0];
+    document.querySelectorAll('#priceTable tr').forEach(function (tr) {
+      tr.classList.toggle('selected', tr.getAttribute('data-model') === key);
+    });
+  }
+
+  document.querySelectorAll('#priceTable tbody tr').forEach(function (tr) {
+    tr.addEventListener('click', function () {
+      var key = tr.getAttribute('data-model');
+      var val = MODEL_MAP[key];
+      if (!val) return;
+      modelSelect.value = val;
+      syncTableSelection();
+      recompute();
+      document.getElementById('calc').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      showToast('Loaded into calculator');
+    });
+  });
+
+  syncTableSelection();
+
+  /* ---------- Decision tree ---------- */
+  var RESULTS = {
+    cheap: {
+      title: 'No-name N100 box',
+      price: '~€95 · Huaqiangbei',
+      body: '16GB / 512GB complete unit from a Huaqiangbei stall. Cheapest possible entry point.',
+      why: 'Risk: no warranty, verify specs on the spot. Only if you accept the gamble.'
+    },
+    value: {
+      title: 'GMKtec G2',
+      price: '~€140 · ZOL anchor ¥1,088',
+      body: 'N100, 12GB DDR4, 512GB SSD. Complete, ready-to-run, branded with international warranty.',
+      why: 'The sweet spot: cheap, reliable, proven Ubuntu Server + Docker compatibility.'
+    },
+    quality: {
+      title: 'Beelink EQ13',
+      price: '~€175 · brand dealer',
+      body: 'N100, 16GB, 500GB SSD. Better build quality, official warranty, less haggling.',
+      why: 'Pay ~€35 more for peace of mind and slightly better thermals.'
+    },
+    perf: {
+      title: 'Ryzen 7 5700U',
+      price: '~€200 · Xianyu ¥1,600',
+      body: '8 cores / 16 threads, 16GB RAM, 256GB SSD. Double the multi-threaded performance of N100.',
+      why: 'Best long-term machine if you can find one — check Xianyu daily, batches sell out fast.'
+    },
+    internal: {
+      title: 'Beelink ME mini',
+      price: '~€275 · 6× M.2 NAS',
+      body: 'N150, 12GB LPDDR5, 6× M.2 slots, dual 2.5G LAN, built-in PSU. No external USB drive needed.',
+      why: 'Tidier setup, but M.2 SSDs cost more per TB than a USB HDD. Only if you value the all-internal form factor.'
+    }
+  };
+
+  var dtOpts = document.getElementById('dtOpts');
+  var dtResult = document.getElementById('dtResult');
+
+  dtOpts.addEventListener('click', function (e) {
+    var btn = e.target.closest('.dt-opt');
+    if (!btn) return;
+
+    dtOpts.querySelectorAll('.dt-opt').forEach(function (b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+
+    var r = RESULTS[btn.getAttribute('data-key')];
+    if (!r) return;
+
+    dtResult.innerHTML =
+      '<h4>' + r.title + '</h4>' +
+      '<div class="price-tag">' + r.price + '</div>' +
+      '<p>' + r.body + '</p>' +
+      '<p class="why">' + r.why + '</p>';
+
+    dtResult.classList.remove('show');
+    /* force reflow so animation replays */
+    void dtResult.offsetWidth;
+    dtResult.classList.add('show');
+  });
+
+  /* ---------- Reset ---------- */
+  document.getElementById('resetBtn').addEventListener('click', function () {
+    if (!confirm('Reset all checkboxes and progress?')) return;
+    persisted.forEach(function (cb) { cb.checked = false; });
+    state = {};
+    save();
+    updateProgress();
+    showToast('Progress reset');
+  });
+
+  /* ---------- Nav scroll-spy ---------- */
+  var tabLinks = Array.prototype.slice.call(document.querySelectorAll('#tabs a'));
+  var sections = tabLinks
+    .map(function (a) { return document.querySelector(a.getAttribute('href')); })
+    .filter(Boolean);
+
+  if ('IntersectionObserver' in window) {
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var id = '#' + entry.target.id;
+        tabLinks.forEach(function (a) {
+          a.classList.toggle('active', a.getAttribute('href') === id);
+        });
+      });
+    }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+
+    sections.forEach(function (s) { spy.observe(s); });
+  }
+
+})();
+</script>
+
+</body>
+</html>
