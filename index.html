@@ -32,7 +32,7 @@
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
-  html { scroll-behavior: smooth; scroll-padding-top: 130px; }
+  html { scroll-behavior: smooth; scroll-padding-top: 110px; }
 
   body {
     background: var(--bg);
@@ -59,11 +59,212 @@
   .header-inner {
     max-width: 1100px;
     margin: 0 auto;
-    padding: 14px 20px;
+    padding: 10px 16px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 16px;
+    gap: 12px;
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+
+  /* hamburger */
+  .menu-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background: var(--bg-3);
+    border: 1px solid var(--border-2);
+    color: var(--text);
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    gap: 4px;
+    padding: 0;
+    transition: background .15s, border-color .15s;
+  }
+  .menu-btn:active { background: var(--bg-4); }
+  .menu-btn .bars { display: grid; gap: 4px; }
+  .menu-btn .bars span {
+    display: block;
+    width: 18px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--text-dim);
+    transition: background .15s;
+  }
+  .menu-btn:hover .bars span { background: var(--text); }
+
+  /* current-section pill */
+  .cur-pill {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    width: 100%;
+    border: none;
+    border-top: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-dim);
+    font-family: var(--sans);
+    font-size: .76rem;
+    font-weight: 600;
+    letter-spacing: .01em;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: color .15s, background .15s;
+  }
+  .cur-pill:hover { color: var(--text); background: rgba(255,255,255,.03); }
+  .cur-pill .chev { font-size: .85rem; line-height: 1; color: var(--text-faint); }
+  .cur-pill .cur-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 70vw; }
+
+  /* ---------- Sheet (nav) ---------- */
+  .sheet-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.55);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .25s ease;
+    z-index: 300;
+  }
+  .sheet-backdrop.open { opacity: 1; pointer-events: auto; }
+
+  .sheet {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 310;
+    background: var(--bg-2);
+    border-top: 1px solid var(--border-2);
+    border-radius: 18px 18px 0 0;
+    box-shadow: 0 -12px 40px rgba(0,0,0,.5);
+    transform: translateY(103%);
+    transition: transform .3s cubic-bezier(.32,.72,0,1);
+    max-height: 88vh;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+  .sheet.open { transform: translateY(0); }
+
+  .sheet-grip {
+    width: 40px;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--border-2);
+    margin: 10px auto 6px;
+    flex-shrink: 0;
+  }
+
+  .sheet-head {
+    padding: 4px 18px 10px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .sheet-head h2 { font-size: 1.05rem; font-weight: 700; }
+  .sheet-head .sheet-sub { font-size: .74rem; color: var(--text-faint); }
+
+  .sheet-scroll {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 14px 20px;
+  }
+
+  /* selectors inside the sheet */
+  .sheet .modes,
+  .sheet .projects {
+    max-width: none;
+    margin: 0;
+    padding: 0 0 8px;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .sheet .modes button,
+  .sheet .projects button {
+    flex: 1 1 auto;
+    text-align: center;
+    padding: 10px 12px;
+    font-size: .82rem;
+  }
+
+  .sheet-label {
+    font-size: .68rem;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--text-faint);
+    font-weight: 700;
+    margin: 10px 4px 6px;
+  }
+
+  /* section list inside sheet */
+  .sheet .tabs {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    display: block;
+    overflow: visible;
+  }
+  .sheet .tabs a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    font-size: .9rem;
+    font-weight: 500;
+    color: var(--text);
+    border: 1px solid transparent;
+  }
+  .sheet .tabs a .idx {
+    font-family: var(--mono);
+    font-size: .7rem;
+    color: var(--text-faint);
+    min-width: 20px;
+  }
+  .sheet .tabs a:hover { background: var(--bg-3); }
+  .sheet .tabs a.active {
+    background: rgba(88,166,255,.12);
+    border-color: rgba(88,166,255,.3);
+    color: var(--accent);
+  }
+  .sheet .tabs a.active .idx { color: var(--accent); }
+
+  /* desktop: turn the sheet into a dropdown panel under the header */
+  @media (min-width: 780px) {
+    .sheet {
+      left: auto;
+      right: 24px;
+      bottom: auto;
+      top: 74px;
+      width: 380px;
+      border-radius: 16px;
+      border: 1px solid var(--border-2);
+      transform: translateY(-12px) scale(.98);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .18s ease, transform .18s ease;
+      transform-origin: top right;
+    }
+    .sheet.open { transform: translateY(0) scale(1); opacity: 1; pointer-events: auto; }
+    .sheet-grip { display: none; }
+    .sheet-backdrop { background: transparent; }
   }
 
   .brand h1 {
@@ -429,7 +630,7 @@
     padding: 28px 20px 80px;
   }
 
-  section { margin-bottom: 40px; scroll-margin-top: 130px; }
+  section { margin-bottom: 40px; scroll-margin-top: 110px; }
 
   .section-head {
     display: flex;
@@ -1151,8 +1352,9 @@
 
   /* ---------- Print ---------- */
   @media print {
-    .app-header, .tabs, .copy-btn, .reset-btn, .toast { display: none !important; }
+    .app-header, .menu-btn, .cur-pill, .sheet, .sheet-backdrop, .copy-btn, .reset-btn, .toast { display: none !important; }
     body { background: #fff; color: #000; }
+    .mode-hidden, .project-hidden { display: block !important; }
     .card, .cmd, .place, .calc, .dt-result { background: #fff; border-color: #ccc; }
     .cmd pre { background: #f5f5f5; color: #000; }
     section { page-break-inside: avoid; }
@@ -1172,55 +1374,81 @@
 
 <header class="app-header">
   <div class="header-inner">
-    <div class="brand">
-      <h1><span class="dot"></span>Media Server Playbook</h1>
-      <p>Buy in Shenzhen · Build at home · Watch anywhere</p>
+    <div class="header-left">
+      <div class="brand">
+        <h1><span class="dot"></span>Media Server Playbook</h1>
+        <p>Buy in Shenzhen · Build at home · Watch anywhere</p>
+      </div>
     </div>
-    <div class="progress-wrap">
-      <svg class="ring" width="44" height="44" viewBox="0 0 44 44">
-        <circle class="bg" cx="22" cy="22" r="18"></circle>
-        <circle class="fg" id="ringFg" cx="22" cy="22" r="18"
-                stroke-dasharray="113.1" stroke-dashoffset="113.1"></circle>
-      </svg>
-      <span id="progressText">0/0</span>
+    <div class="header-actions">
+      <div class="progress-wrap">
+        <svg class="ring" width="44" height="44" viewBox="0 0 44 44">
+          <circle class="bg" cx="22" cy="22" r="18"></circle>
+          <circle class="fg" id="ringFg" cx="22" cy="22" r="18"
+                  stroke-dasharray="113.1" stroke-dashoffset="113.1"></circle>
+        </svg>
+        <span id="progressText">0/0</span>
+      </div>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+        <span class="bars"><span></span><span></span><span></span></span>
+      </button>
     </div>
   </div>
-  <div class="modes" id="modes">
-    <button data-mode="buy" class="active">🛒 Shenzhen Hunt</button>
-    <button data-mode="build">🖥️ Build &amp; Deploy</button>
-  </div>
-  <div class="projects" id="projects">
-    <button data-project="netflix" class="active">🎬 Home Netflix</button>
-    <button data-project="voice">🗣️ Home Voice Assistant</button>
-  </div>
-  <nav class="tabs" id="tabs">
-    <a href="#target" data-mode="buy">Target</a>
-    <a href="#prices" data-mode="buy" data-project="netflix">Prices</a>
-    <a href="#calc" data-mode="buy" data-project="netflix">Calculator</a>
-    <a href="#verify" data-mode="buy" data-project="netflix">Verify</a>
-    <a href="#where" data-mode="buy">Where</a>
-    <a href="#negotiate" data-mode="buy">Negotiate</a>
-    <a href="#decision" data-mode="buy" data-project="netflix">Decide</a>
-    <a href="#tablets" data-mode="buy" data-project="voice">Tablet</a>
-    <a href="#checklist" data-mode="buy">Checklist</a>
-    <a href="#emergency" data-mode="buy">Emergency</a>
-    <a href="#prereq" data-mode="build" data-project="netflix">Prereqs</a>
-    <a href="#install" data-mode="build" data-project="netflix">OS</a>
-    <a href="#drive" data-mode="build" data-project="netflix">Drive</a>
-    <a href="#docker" data-mode="build" data-project="netflix">Docker</a>
-    <a href="#keys" data-mode="build" data-project="netflix">Keys</a>
-    <a href="#stack" data-mode="build" data-project="netflix">Stack</a>
-    <a href="#configure" data-mode="build" data-project="netflix">Configure</a>
-    <a href="#verify2" data-mode="build" data-project="netflix">Verify</a>
-    <a href="#tv" data-mode="build" data-project="netflix">TV</a>
-    <a href="#remote" data-mode="build" data-project="netflix">Remote</a>
-    <a href="#daily" data-mode="build" data-project="netflix">Daily</a>
-    <a href="#trouble" data-mode="build" data-project="netflix">Fix</a>
-    <a href="#done" data-mode="build" data-project="netflix">Done</a>
-    <a href="#voice" data-mode="build" data-project="voice">Voice</a>
-    <a href="#voice-done" data-mode="build" data-project="voice">Done</a>
-  </nav>
+  <button class="cur-pill" id="curPill">
+    <span class="chev">≡</span>
+    <span class="cur-label" id="curLabel">Tap for sections</span>
+    <span class="chev">▾</span>
+  </button>
 </header>
+
+<div class="sheet-backdrop" id="sheetBackdrop"></div>
+<aside class="sheet" id="sheet" aria-hidden="true">
+  <div class="sheet-grip"></div>
+  <div class="sheet-head">
+    <h2>Jump to</h2>
+    <span class="sheet-sub" id="sheetSub">Shenzhen Hunt · Home Netflix</span>
+  </div>
+  <div class="sheet-scroll">
+    <div class="sheet-label">Chapter</div>
+    <div class="modes" id="modes">
+      <button data-mode="buy" class="active">🛒 Shenzhen Hunt</button>
+      <button data-mode="build">🖥️ Build &amp; Deploy</button>
+    </div>
+    <div class="sheet-label">Setup</div>
+    <div class="projects" id="projects">
+      <button data-project="netflix" class="active">🎬 Home Netflix</button>
+      <button data-project="voice">🗣️ Home Voice Assistant</button>
+    </div>
+    <div class="sheet-label">Sections</div>
+    <nav class="tabs" id="tabs">
+      <a href="#target" data-mode="buy">Target</a>
+      <a href="#prices" data-mode="buy" data-project="netflix">Prices</a>
+      <a href="#calc" data-mode="buy" data-project="netflix">Calculator</a>
+      <a href="#verify" data-mode="buy" data-project="netflix">Verify</a>
+      <a href="#where" data-mode="buy">Where</a>
+      <a href="#negotiate" data-mode="buy">Negotiate</a>
+      <a href="#decision" data-mode="buy" data-project="netflix">Decide</a>
+      <a href="#tablets" data-mode="buy" data-project="voice">Tablet</a>
+      <a href="#checklist" data-mode="buy">Checklist</a>
+      <a href="#emergency" data-mode="buy">Emergency</a>
+      <a href="#prereq" data-mode="build" data-project="netflix">Prereqs</a>
+      <a href="#install" data-mode="build" data-project="netflix">OS</a>
+      <a href="#drive" data-mode="build" data-project="netflix">Drive</a>
+      <a href="#docker" data-mode="build" data-project="netflix">Docker</a>
+      <a href="#keys" data-mode="build" data-project="netflix">Keys</a>
+      <a href="#stack" data-mode="build" data-project="netflix">Stack</a>
+      <a href="#configure" data-mode="build" data-project="netflix">Configure</a>
+      <a href="#verify2" data-mode="build" data-project="netflix">Verify</a>
+      <a href="#tv" data-mode="build" data-project="netflix">TV</a>
+      <a href="#remote" data-mode="build" data-project="netflix">Remote</a>
+      <a href="#daily" data-mode="build" data-project="netflix">Daily</a>
+      <a href="#trouble" data-mode="build" data-project="netflix">Fix</a>
+      <a href="#done" data-mode="build" data-project="netflix">Done</a>
+      <a href="#voice" data-mode="build" data-project="voice">Voice</a>
+      <a href="#voice-done" data-mode="build" data-project="voice">Done</a>
+    </nav>
+  </div>
+</aside>
 
 <main>
 
@@ -1230,7 +1458,7 @@
       <span class="num">01</span>
       <h2>What I'm Buying</h2>
     </div>
-    <p class="lead">Two devices, one trip to Huaqiangbei. Use the <strong>🎬 Home Netflix</strong> / <strong>🗣️ Voice</strong> switch above to filter the purchase sections for each.</p>
+    <p class="lead">Two devices, one trip to Huaqiangbei. Open the <strong>☰ menu</strong> to switch between <strong>🎬 Home Netflix</strong> and <strong>🗣️ Voice</strong> and filter the purchase sections for each.</p>
 
     <div class="hw-split">
       <div class="hw-card" data-project="netflix">
@@ -2837,6 +3065,7 @@ ls -li /mnt/media/tv/&lt;series&gt;/&lt;episode-file&gt;<span class="cmt">
     applyVisibility();
     updateProgress();
     if (typeof refreshSpy === 'function') refreshSpy();
+    if (typeof syncCurrent === 'function') syncCurrent();
   }
 
   function setProject(project) {
@@ -2846,6 +3075,7 @@ ls -li /mnt/media/tv/&lt;series&gt;/&lt;episode-file&gt;<span class="cmt">
     applyVisibility();
     updateProgress();
     if (typeof refreshSpy === 'function') refreshSpy();
+    if (typeof syncCurrent === 'function') syncCurrent();
   }
 
   modeBtns.forEach(function (b) {
@@ -3094,22 +3324,100 @@ ls -li /mnt/media/tv/&lt;series&gt;/&lt;episode-file&gt;<span class="cmt">
     return allSections.filter(function (s) { return !s.classList.contains('mode-hidden'); });
   }
 
+  function sectionTitle(sec) {
+    var h = sec.querySelector('.section-head h2');
+    var num = sec.querySelector('.section-head .num, .section-head .phase');
+    var label = (num ? num.textContent.trim() + ' · ' : '') + (h ? h.textContent.trim() : sec.id);
+    return label;
+  }
+
+  function setCurrentSection(id) {
+    var sec = document.getElementById(id);
+    if (!sec) return;
+    curLabel.textContent = sectionTitle(sec);
+    tabLinks.forEach(function (a) {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+    });
+  }
+
+  var curLabel = document.getElementById('curLabel');
+  var curPill = document.getElementById('curPill');
   var spy = null;
+
+  function syncCurrent() {
+    var vis = visibleSections();
+    if (vis.length) setCurrentSection(vis[0].id);
+  }
 
   if ('IntersectionObserver' in window) {
     spy = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (!entry.isIntersecting) return;
-        var id = '#' + entry.target.id;
-        tabLinks.forEach(function (a) {
-          a.classList.toggle('active', a.getAttribute('href') === id);
-        });
+        setCurrentSection(entry.target.id);
       });
     }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
   }
 
+  /* ---------- Sheet ---------- */
+  var sheet = document.getElementById('sheet');
+  var sheetBackdrop = document.getElementById('sheetBackdrop');
+  var menuBtn = document.getElementById('menuBtn');
+  var sheetSub = document.getElementById('sheetSub');
+
+  function updateSheetSub() {
+    var modeText = activeMode === 'build' ? 'Build & Deploy' : 'Shenzhen Hunt';
+    var projText = activeProject === 'voice' ? 'Home Voice Assistant' : 'Home Netflix';
+    sheetSub.textContent = modeText + ' · ' + projText;
+  }
+
+  function openSheet() {
+    updateSheetSub();
+    sheet.classList.add('open');
+    sheetBackdrop.classList.add('open');
+    sheet.setAttribute('aria-hidden', 'false');
+    menuBtn.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeSheet() {
+    sheet.classList.remove('open');
+    sheetBackdrop.classList.remove('open');
+    sheet.setAttribute('aria-hidden', 'true');
+    menuBtn.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+
+  menuBtn.addEventListener('click', function () {
+    if (sheet.classList.contains('open')) closeSheet(); else openSheet();
+  });
+  curPill.addEventListener('click', openSheet);
+  sheetBackdrop.addEventListener('click', closeSheet);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeSheet();
+  });
+
+  /* close the sheet after tapping a section, and jump */
+  tabLinks.forEach(function (a) {
+    a.addEventListener('click', function () {
+      var id = a.getAttribute('href').slice(1);
+      setCurrentSection(id);
+      closeSheet();
+    });
+  });
+
+  /* number the section links in the sheet */
+  tabLinks.forEach(function (a, i) {
+    if (!a.querySelector('.idx')) {
+      var s = document.createElement('span');
+      s.className = 'idx';
+      s.textContent = String(i + 1).padStart(2, '0');
+      a.insertBefore(s, a.firstChild);
+    }
+  });
+
   /* ---------- Init ---------- */
   setMode(activeMode);
+  syncCurrent();
 
 })();
 </script>
