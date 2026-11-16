@@ -1673,7 +1673,7 @@
       <span class="num">04</span>
       <h2>Verification Commands</h2>
     </div>
-    <p class="lead">Boot a Ubuntu Server 24.04 USB stick on the machine before paying. Run each command, tick it off, and compare against the expected output. <strong style="color:var(--danger)">If the vendor won't let you test, walk away.</strong></p>
+    <p class="lead">Boot an Ubuntu Server 24.04 USB stick on the machine before paying. Run each command, tick it off, and compare against the expected output. <strong style="color:var(--danger)">If the vendor won't let you test, walk away.</strong></p>
 
     <div class="cmd">
       <div class="cmd-head">
@@ -1973,7 +1973,7 @@ sudo dmidecode -t memory | grep -E "Size|Speed|Type"
           <label style="display:flex;gap:12px;align-items:flex-start;width:100%;cursor:pointer">
             <input type="checkbox" id="c1" data-persist>
             <span class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            <span class="txt"><strong>Ubuntu Server 24.04 USB stick prepared</strong>Tested boot on another machine</span>
+            <span class="txt"><strong>Ubuntu Server 24.04 LTS USB stick prepared</strong>Latest point release (24.04.5+), checksum verified, tested boot on another machine</span>
           </label>
         </li>
         <li>
@@ -2147,24 +2147,40 @@ sudo dmidecode -t memory | grep -E "Size|Speed|Type"
     </div>
     <p class="lead">Get Ubuntu Server 24.04 LTS onto the NVMe SSD and reachable over SSH.</p>
 
+    <div class="note"><span class="ico">📌</span><div><strong>Use the latest 24.04 point release.</strong> 24.04 LTS ships periodic point releases (currently <strong>24.04.5</strong>). They are the same LTS, but carry newer kernels and HWE drivers — noticeably better support for N100/N150 iGPUs and Intel Wi-Fi 6. Prefer a recent point release over 24.04.0.</div></div>
+
     <div class="card">
       <h3 style="font-size:1rem;margin-bottom:10px">1.1 · Create the USB installer</h3>
       <ol class="steps">
         <li>
-          <strong>Download Ubuntu Server 24.04 LTS (64-bit)</strong>
-          <p>From <a href="https://ubuntu.com/download/server" style="color:var(--accent)">ubuntu.com/download/server</a>.</p>
+          <strong>Download Ubuntu Server 24.04.5 LTS (64-bit)</strong>
+          <p>Direct link: <a href="https://releases.ubuntu.com/24.04/ubuntu-24.04.5-live-server-amd64.iso" style="color:var(--accent);font-family:var(--mono);font-size:.82rem">releases.ubuntu.com/24.04/ubuntu-24.04.5-live-server-amd64.iso</a> — or browse <a href="https://releases.ubuntu.com/24.04/" style="color:var(--accent)">releases.ubuntu.com/24.04</a> for a newer point release.</p>
+        </li>
+        <li>
+          <strong>Verify the download (do not skip)</strong>
+          <p>A truncated or corrupted ISO produces an installer that fails in confusing ways. Check it against Ubuntu's published checksum:</p>
+          <div class="cmd">
+            <div class="cmd-title"><span class="n">sha</span> Verify the ISO
+              <button class="copy-btn" data-copy="curl -sO https://releases.ubuntu.com/24.04/SHA256SUMS && shasum -a 256 -c SHA256SUMS --ignore-missing">Copy</button>
+            </div>
+            <pre>curl -sO https://releases.ubuntu.com/24.04/SHA256SUMS
+shasum -a 256 -c SHA256SUMS --ignore-missing<span class="cmt">
+# Expected: ubuntu-24.04.5-...: OK</span></pre>
+          </div>
+          <div class="note ok"><span class="ico">✅</span><div>Reference hash for <code>ubuntu-24.04.5-live-server-amd64.iso</code>:<br><code style="font-size:.7rem;word-break:break-all">97f3d7ffb032c3eb3b23d2c8be9cc76e60c2c1f2c0146ba5ba9fe01cafae0fd8</code></div></div>
         </li>
         <li>
           <strong>Write the ISO to your USB stick</strong>
           <p>Use <strong>Rufus</strong> (Windows), <strong>balenaEtcher</strong> (Mac/Linux), or <code style="font-family:var(--mono)">dd</code>:</p>
           <div class="cmd">
             <div class="cmd-title"><span class="n">dd</span> Write ISO to USB
-              <button class="copy-btn" data-copy="sudo dd if=ubuntu-24.04-live-server-amd64.iso of=/dev/sdX bs=4M status=progress oflag=sync">Copy</button>
+              <button class="copy-btn" data-copy="sudo dd if=ubuntu-24.04.5-live-server-amd64.iso of=/dev/sdX bs=4M status=progress oflag=sync">Copy</button>
             </div>
-            <pre>sudo dd if=ubuntu-24.04-live-server-amd64.iso of=/dev/sdX bs=4M status=progress oflag=sync<span class="cmt">
+            <pre>sudo dd if=ubuntu-24.04.5-live-server-amd64.iso of=/dev/sdX bs=4M status=progress oflag=sync<span class="cmt">
 # Replace /dev/sdX with your USB device — check with lsblk FIRST</span></pre>
           </div>
-          <div class="note danger"><span class="ico">⚠️</span><div><strong>Wrong device = data loss.</strong> Run <code>lsblk</code> before the <code>dd</code> command and confirm your USB stick's device name.</div></div>
+          <div class="note"><span class="ico">🍎</span><div><strong>On macOS:</strong> use the raw device for speed — <code>of=/dev/rdisk4</code> instead of <code>/dev/disk4</code>. Afterwards macOS will claim the disk is "not readable": that's expected (it's now a Linux ISO9660 filesystem) — click <em>Ignore</em>, never <em>Initialize</em>.</div></div>
+          <div class="note danger"><span class="ico">⚠️</span><div><strong>Wrong device = data loss.</strong> Run <code>lsblk</code> (Linux) or <code>diskutil list</code> (macOS) before the <code>dd</code> command and confirm your USB stick's device name.</div></div>
         </li>
       </ol>
     </div>
@@ -2173,7 +2189,7 @@ sudo dmidecode -t memory | grep -E "Size|Speed|Type"
       <h3 style="font-size:1rem;margin-bottom:10px">1.2 · BIOS configuration <span style="color:var(--danger);font-size:.8rem">(critical)</span></h3>
       <ol class="steps">
         <li><strong>Enter BIOS</strong><p>Press <code style="font-family:var(--mono)">DEL</code>, <code style="font-family:var(--mono)">F2</code>, <code style="font-family:var(--mono)">F7</code> or <code style="font-family:var(--mono)">ESC</code> during boot (varies by vendor; GMKtec/Beelink usually use DEL or F7).</p></li>
-        <li><strong>Disable Secure Boot</strong><p>Security tab → Secure Boot → <strong>Disabled</strong> (or Custom). Ubuntu Server 24.04 sometimes fails to boot with it enabled on N100 boards.</p></li>
+        <li><strong>Disable Secure Boot</strong><p>Security tab → Secure Boot → <strong>Disabled</strong> (or Custom). Ubuntu Server sometimes fails to boot with it enabled on N100 boards — 24.04.5 has a better-signed kernel than 24.04.0, so try the stick before changing BIOS.</p></li>
         <li><strong>Enable UEFI boot mode</strong><p>Ensure boot mode is UEFI, not Legacy/CSM.</p></li>
         <li><strong>Set USB as first boot device</strong><p>Then save and exit (usually <code style="font-family:var(--mono)">F4</code> or <code style="font-family:var(--mono)">F10</code>).</p></li>
         <li><strong>Enable Intel VT-x</strong><p>If present — for Docker virtualization support.</p></li>
